@@ -1,0 +1,42 @@
+/* ===== GLOBAL BACKGROUND ===== */
+body {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #ffffff 100%);
+    color: #0f172a;
+}
+
+/* ===== HERO (CLEAN + CONTROLLED) ===== */
+.hero {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)),
+        url("../img/hero-bg.png");
+
+    background-size: cover;
+    background-position: center;
+}
+
+/* ===== HERO TEXT VISIBILITY ===== */
+.hero h1 {
+    color: #0c4a6e;
+    font-weight: 800;
+}
+
+.hero p {
+    color: #075985;
+}
+
+/* ===== CARD SYSTEM (PREMIUM CLEAN) ===== */
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 20px;
+
+    box-shadow: 0 10px 30px rgba(2, 132, 199, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}

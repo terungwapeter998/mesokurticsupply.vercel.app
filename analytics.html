@@ -1,0 +1,251 @@
+<!--  -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations | Mesokurtic Supply Chain</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-navy: #0f172a;
+            --accent-green: #22c55e;
+            --sidebar-width: 280px;
+            --bg-body: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .side-nav {
+            width: var(--sidebar-width);
+            background: var(--primary-navy);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .brand-name span {
+            color: var(--accent-green);
+        }
+
+        .side-nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            display: block;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .side-nav a:hover,
+        .side-nav a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-green);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 40px;
+        }
+
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--primary-navy);
+        }
+
+        /* --- OPERATIONS GRID --- */
+        .ops-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            /* Map takes more space */
+            gap: 25px;
+        }
+
+        .panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .panel h2 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* MOCK MAP AREA */
+        .map-placeholder {
+            width: 100%;
+            height: 450px;
+            background: #e5e7eb url('https://via.placeholder.com/800x450?text=Live+GPS+Fleet+Map+Display') center/cover;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* DISPATCH LIST */
+        .dispatch-list {
+            list-style: none;
+        }
+
+        .dispatch-item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dispatch-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .item-sub {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .badge-ready {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            background: var(--primary-navy);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 1100px) {
+            .ops-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="side-nav">
+        <div class="brand-name">MESO<span>KURTIC</span></div>
+
+        <p style="color: #64748b; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin: 20px 0 10px;">
+            Platform</p>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="operations.html" class="active">🚚 Operations</a>
+        <a href="analytics.html">📈 Analytics</a>
+        <a href="career.html">Careers</a>
+
+        <p style="color: #64748b; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin: 20px 0 10px;">
+            Support</p>
+        <a href="index.html">🏠 Public Home</a>
+        <a href="#">⚙️ Settings</a>
+    </aside>
+
+    <div class="main-wrapper">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h1 class="page-title">Fleet Operations</h1>
+            <button class="btn-primary">+ New Dispatch</button>
+        </div>
+
+        <div class="ops-grid">
+            <section class="panel">
+                <h2>Live Fleet Tracking <span style="font-size: 0.8rem; font-weight: 400; color: var(--accent-green);">●
+                        Live Feed</span></h2>
+                <div class="map-placeholder">
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>Dispatch Queue</h2>
+                <ul class="dispatch-list">
+                    <li class="dispatch-item">
+                        <div class="item-header">
+                            <span>Order #8842</span>
+                            <span class="badge badge-ready">Ready</span>
+                        </div>
+                        <div class="item-sub">Route: Lagos → Ibadan | 12.5 Tons</div>
+                    </li>
+                    <li class="dispatch-item">
+                        <div class="item-header">
+                            <span>Order #8845</span>
+                            <span class="badge badge-pending">Assigning</span>
+                        </div>
+                        <div class="item-sub">Route: Kano → Abuja | 8.0 Tons</div>
+                    </li>
+                    <li class="dispatch-item">
+                        <div class="item-header">
+                            <span>Order #8849</span>
+                            <span class="badge badge-pending">In Review</span>
+                        </div>
+                        <div class="item-sub">Route: Port Harcourt → Onitsha | 15.0 Tons</div>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+</body>
+
+</html>

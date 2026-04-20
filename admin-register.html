@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Setup | Mesokurtic Supply Chain</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #0f172a;
+            --green: #22c55e;
+            --slate-text: #64748b;
+            --white: #ffffff;
+            --error-red: #ef4444;
+            --bg-gradient: radial-gradient(circle at top left, #1e293b, #0f172a);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--white);
+        }
+
+        /* --- MINIMAL TOPBAR --- */
+        .topbar {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .brand span {
+            color: var(--green);
+        }
+
+        .context-tag {
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        /* --- AUTH CARD --- */
+        .auth-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: var(--white);
+            color: var(--navy);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-card h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .auth-card p {
+            font-size: 0.85rem;
+            color: var(--slate-text);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* --- FORM ELEMENTS --- */
+        form label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: var(--navy);
+            letter-spacing: 0.5px;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        form input:focus {
+            outline: none;
+            border-color: var(--green);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: var(--navy);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        /* --- SYSTEM WARNINGS --- */
+        .auth-warning {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff1f2;
+            border-left: 4px solid var(--error-red);
+            border-radius: 4px;
+        }
+
+        .auth-warning p {
+            color: #991b1b;
+            font-size: 0.75rem;
+            text-align: left;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .security-badge {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: var(--slate-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div class="brand">
+            MESO<span>KURTIC</span> <span class="context-tag">ADMIN SETUP</span>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <section class="auth-card">
+            <h1>Initial Account Setup</h1>
+            <p>Establish the master administrator credentials for the supply chain platform.</p>
+
+            <form id="admin-register-form">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Legal Name" required>
+
+                <label for="email">Admin Email</label>
+                <input type="email" id="email" name="email" placeholder="admin@mesokurtic.com" required
+                    autocomplete="username">
+
+                <label for="password">Create Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required
+                    autocomplete="new-password">
+
+                <label for="role">System Role</label>
+                <select id="role" name="role" required>
+                    <option value="admin">Super Administrator</option>
+                </select>
+
+                <button type="submit" class="btn-primary">
+                    Initialize System
+                </button>
+            </form>
+
+            <div class="auth-warning">
+                <p><strong>SECURITY NOTICE:</strong> This bootstrap portal is currently active. Ensure this file is
+                    purged from the production server once the master account is initialized.</p>
+            </div>
+
+            <div class="security-badge">
+                <span>🛡️</span> 256-bit SSL Encrypted Environment
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Mesokurtic Supply Chain Limited. Internal Deployment v1.0.4</p>
+    </footer>
+
+    <script>
+        // Form handling logic would go here
+        document.getElementById('admin-register-form').addEventListener('submit', function (e) {
+            // Your Firebase / Auth logic
+            console.log("Initializing Admin...");
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+/* =========================================================
+   MESOKURTIC DASHBOARD SYSTEM (PRODUCTION READY)
+   Ops UI, KPI Layer, Tables, Enterprise Layout
+========================================================= */
+
+/* =========================
+   DASHBOARD BASE
+========================= */
+.dashboard {
+    padding: 80px 20px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* =========================
+   BRAND HEADER STATE
+========================= */
+.brand {
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.brand .context {
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-left: 6px;
+}
+
+/* =========================
+   KPI GRID (OPS OVERVIEW)
+========================= */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.kpi-card {
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* =========================
+   SECTION PANEL
+========================= */
+.panel {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.panel h2 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: #ffffff;
+}
+
+/* =========================
+   TABLE SYSTEM (ENTERPRISE)
+========================= */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.data-table thead {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.data-table th {
+    text-align: left;
+    padding: 12px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.data-table td {
+    padding: 12px;
+    font-size: 0.9rem;
+    color: #e5e7eb;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* =========================
+   STATUS SYSTEM (OPS CONTROL)
+========================= */
+.status {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.in-transit {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+}
+
+.loading {
+    background: rgba(234, 179, 8, 0.12);
+    color: #eab308;
+}
+
+.delayed {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+/* =========================
+   FOOTER DASHBOARD
+========================= */
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+/* =========================
+   RESPONSIVE ENGINE
+========================= */
+@media (max-width: 1024px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .dashboard {
+        padding: 70px 12px 30px;
+    }
+}

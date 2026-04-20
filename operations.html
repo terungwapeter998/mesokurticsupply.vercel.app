@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Control | Mesokurtic</title>
+
+    <style>
+        :root {
+            --sidebar-width: 260px;
+            --primary-navy: #001f3f;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --danger-red: #ef4444;
+            --bg-slate: #f8fafc;
+            --panel-white: #ffffff;
+            --text-main: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-slate);
+            color: var(--text-main);
+            display: flex;
+            /* Creates the Sidebar/Main layout */
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR DESIGN */
+        .drawer {
+            width: var(--sidebar-width);
+            background: var(--primary-navy);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            padding: 1.5rem;
+        }
+
+        .logo-container {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .logo-img {
+            height: 55px;
+            /* Large visibility */
+            width: auto;
+            filter: brightness(0) invert(1);
+            /* Makes logo white for dark bg */
+        }
+
+        .drawer-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .drawer-nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .drawer-nav a:hover,
+        .drawer-nav a.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* MAIN CONTENT AREA */
+        .dashboard {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 2rem;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand-context {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            font-size: 0.8rem;
+        }
+
+        /* KPI CARDS */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--panel-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .kpi-card h3 {
+            font-size: 0.85rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .kpi-card.highlight {
+            border-left-color: var(--success-green);
+        }
+
+        /* DATA TABLE */
+        .panel {
+            background: var(--panel-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .data-table th {
+            padding: 1rem;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+
+        /* STATUS BADGES */
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-transit {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-delayed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* BUTTONS */
+        .btn {
+            background: var(--primary-navy);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body class="app-shell">
+
+    <aside class="drawer">
+        <div class="logo-container">
+            <img src="assets/image/logo.png" alt="Mesokurtic Logo" class="logo-img">
+            <h2 style="margin-top:10px; font-size: 1.2rem;">MESOKURTIC</h2>
+        </div>
+
+        <nav class="drawer-nav">
+            <a href="dashboard.html">Overview</a>
+            <a href="operations.html" class="active">Operations</a>
+            <a href="analytics.html">Analytics</a>
+            <div style="flex-grow: 1;"></div> <a href="index.html" style="background: rgba(255,255,255,0.1);">Exit
+                System</a>
+        </nav>
+    </aside>
+
+    <main class="dashboard">
+
+        <header class="top-header">
+            <div>
+                <span class="brand-context">Logistics Command Centre</span>
+                <h1 style="font-size: 1.75rem; margin-top: 4px;">Operations Control</h1>
+            </div>
+            <div class="actions">
+                <button class="btn-secondary">↻ Refresh Data</button>
+                <button class="btn">+ New Shipment</button>
+            </div>
+        </header>
+
+        <section class="kpi-grid">
+            <article class="kpi-card">
+                <h3>Active Trucks</h3>
+                <div class="kpi-value">42</div>
+            </article>
+            <article class="kpi-card">
+                <h3>In Transit</h3>
+                <div class="kpi-value">28</div>
+            </article>
+            <article class="kpi-card" style="border-left-color: var(--danger-red);">
+                <h3>Delayed</h3>
+                <div class="kpi-value">3</div>
+            </article>
+            <article class="kpi-card highlight">
+                <h3>Fulfillment</h3>
+                <div class="kpi-value">98.2%</div>
+            </article>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Live Shipment Tracking</h2>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Shipment ID</th>
+                        <th>Client</th>
+                        <th>Route</th>
+                        <th>Status</th>
+                        <th>ETA</th>
+                    </tr>
+                </thead>
+                <tbody id="shipment-table-body">
+                    <tr>
+                        <td><strong>#MSK-9901</strong></td>
+                        <td>UAC Nigeria Plc</td>
+                        <td>Lagos → Zaria</td>
+                        <td><span class="status status-transit">In Transit</span></td>
+                        <td>14:30 Today</td>
+                    </tr>
+                    <tr>
+                        <td><strong>#MSK-9902</strong></td>
+                        <td>Livestock Feeds</td>
+                        <td>Ibadan → Kano</td>
+                        <td><span class="status status-delayed">Delayed</span></td>
+                        <td>Tomorrow</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer>
+            <span>© 2026 Mesokurtic Supply Chain Ltd</span>
+            <span style="color: var(--success-green);">● System Live</span>
+        </footer>
+    </main>
+
+</body>
+
+</html>

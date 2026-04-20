@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesokurtic | Excellence in Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0f172a;
+            --accent-green: #22c55e;
+            --white: #ffffff;
+            --overlay: rgba(15, 23, 42, 0.75);
+            --slate-400: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: var(--white);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--primary-navy);
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .brand-name span {
+            color: var(--accent-green);
+        }
+
+        .menu-btn {
+            font-size: 32px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--primary-navy);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 80vh;
+            /* Adjusted height to accommodate footer */
+            width: 100%;
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                url('assets/image/inventory.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        /* --- SIDE MENU --- */
+        .side-nav {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: var(--primary-navy);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 60px 30px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-nav.active {
+            right: 0;
+        }
+
+        .close-btn {
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .nav-section-label {
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 25px 0 10px 0;
+            letter-spacing: 1.5px;
+        }
+
+        .side-nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 12px 0;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .side-nav a:hover {
+            color: var(--accent-green);
+            padding-left: 10px;
+        }
+
+        .portal-link {
+            margin-top: 40px;
+            background: var(--accent-green);
+            color: var(--primary-navy) !important;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+
+        /* --- FOOTER / COPYRIGHT --- */
+        .footer {
+            background: var(--primary-navy);
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer p {
+            color: var(--slate-400);
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .footer .legal-links {
+            margin-top: 15px;
+        }
+
+        .footer .legal-links a {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-size: 0.8rem;
+            margin: 0 10px;
+            transition: 0.3s;
+            opacity: 0.8;
+        }
+
+        .footer .legal-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="brand-container">
+            <img src="assets/image/logo.png" alt="Logo" class="logo-img">
+            <h1 class="brand-name">MESO<span>KURTIC</span></h1>
+        </div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </header>
+
+    <nav class="side-nav" id="sideNav">
+        <span class="close-btn" onclick="toggleMenu()">×</span>
+
+        <p class="nav-section-label">Corporate</p>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="career.html">Careers</a>
+
+        <p class="nav-section-label">Management</p>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="operations.html">Operations</a>
+        <a href="analytics.html">Analytics</a>
+
+        <a href="login.html" class="portal-link">Portal Login</a>
+    </nav>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h1>System Overview</h1>
+            <p>Intelligence in Motion</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Mesokurtic Supply Chain Limited. All Rights Reserved.</p>
+            <div class="legal-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Compliance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('sideNav').classList.toggle('active');
+        }
+
+        document.addEventListener('click', (e) => {
+            const nav = document.getElementById('sideNav');
+            const btn = document.querySelector('.menu-btn');
+            if (!nav.contains(e.target) && !btn.contains(e.target) && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
