@@ -4,310 +4,514 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operations Control | Mesokurtic</title>
+    <title>Operations | Mesokurtic Supply Chain</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
-            --sidebar-width: 260px;
-            --primary-navy: #001f3f;
-            --accent-blue: #3b82f6;
-            --success-green: #10b981;
-            --warning-amber: #f59e0b;
-            --danger-red: #ef4444;
-            --bg-slate: #f8fafc;
-            --panel-white: #ffffff;
-            --text-main: #1e293b;
+            --primary-navy: #0f172a;
+            --accent-green: #22c55e;
+            --sidebar-width: 280px;
+            --bg-body: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: var(--bg-slate);
-            color: var(--text-main);
+            background-color: var(--bg-body);
             display: flex;
-            /* Creates the Sidebar/Main layout */
             min-height: 100vh;
         }
 
-        /* SIDEBAR DESIGN */
-        .drawer {
+        /* SIDEBAR */
+        .side-nav {
             width: var(--sidebar-width);
             background: var(--primary-navy);
             color: white;
-            display: flex;
-            flex-direction: column;
+            padding: 30px 20px;
             position: fixed;
             height: 100vh;
-            padding: 1.5rem;
-        }
-
-        .logo-container {
-            padding-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .logo-img {
-            height: 55px;
-            /* Large visibility */
-            width: auto;
-            filter: brightness(0) invert(1);
-            /* Makes logo white for dark bg */
-        }
-
-        .drawer-nav {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
         }
 
-        .drawer-nav a {
+        .brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .brand-name span {
+            color: var(--accent-green);
+        }
+
+        .side-nav a {
             color: #cbd5e1;
             text-decoration: none;
-            padding: 0.8rem 1rem;
+            padding: 12px 15px;
             border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s;
+            margin-bottom: 5px;
+            display: block;
+            font-size: 0.95rem;
+            transition: 0.2s;
         }
 
-        .drawer-nav a:hover,
-        .drawer-nav a.active {
-            background: var(--accent-blue);
-            color: white;
+        .side-nav a:hover,
+        .side-nav a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-green);
         }
 
-        /* MAIN CONTENT AREA */
-        .dashboard {
-            margin-left: var(--sidebar-width);
-            flex-grow: 1;
-            padding: 2rem;
-        }
-
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .brand-context {
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .nav-section-label {
+            color: #64748b;
+            font-size: 0.7rem;
             font-weight: 700;
-            color: var(--primary-navy);
-            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin: 20px 0 10px;
         }
 
-        /* KPI CARDS */
-        .kpi-grid {
+        /* MAIN */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 40px;
+        }
+
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-navy);
+        }
+
+        /* KPI STRIP */
+        .kpi-strip {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 16px;
+            margin: 24px 0;
         }
 
         .kpi-card {
-            background: var(--panel-white);
-            padding: 1.5rem;
+            background: var(--white);
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid var(--accent-blue);
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .kpi-card.red {
+            border-left-color: #ef4444;
+        }
+
+        .kpi-card.blue {
+            border-left-color: #3b82f6;
+        }
+
+        .kpi-card.amber {
+            border-left-color: #f59e0b;
         }
 
         .kpi-card h3 {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            font-weight: 600;
             color: #64748b;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
         }
 
         .kpi-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-top: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-navy);
         }
 
-        .kpi-card.highlight {
-            border-left-color: var(--success-green);
+        /* OPS GRID */
+        .ops-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
         }
 
-        /* DATA TABLE */
         .panel {
-            background: var(--panel-white);
+            background: var(--white);
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-            overflow: hidden;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border);
         }
 
-        .panel-header {
+        .panel h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            color: var(--primary-navy);
         }
 
+        .live-dot {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--accent-green);
+        }
+
+        /* SHIPMENT TABLE */
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            text-align: left;
         }
 
         .data-table th {
-            padding: 1rem;
+            padding: 10px 12px;
             background: #f1f5f9;
             color: #475569;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
+            text-align: left;
         }
 
         .data-table td {
-            padding: 1rem;
+            padding: 12px;
             border-bottom: 1px solid #f1f5f9;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
+            color: var(--primary-navy);
         }
 
-        /* STATUS BADGES */
         .status {
-            padding: 0.25rem 0.75rem;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             text-transform: uppercase;
         }
 
-        .status-transit {
+        .s-transit {
             background: #dbeafe;
             color: #1e40af;
         }
 
-        .status-delayed {
+        .s-delayed {
             background: #fee2e2;
             color: #991b1b;
         }
 
+        .s-delivered {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .s-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* DISPATCH LIST */
+        .dispatch-list {
+            list-style: none;
+        }
+
+        .dispatch-item {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dispatch-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 4px;
+        }
+
+        .item-sub {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-ready {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-review {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* LOADING STATE */
+        .loading-row td {
+            color: #94a3b8;
+            font-style: italic;
+            text-align: center;
+            padding: 24px;
+        }
+
         /* BUTTONS */
-        .btn {
+        .btn-primary {
             background: var(--primary-navy);
             color: white;
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 0.85rem;
         }
 
-        .btn-secondary {
-            background: #e2e8f0;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+        @media (max-width: 1100px) {
+            .ops-grid {
+                grid-template-columns: 1fr;
+            }
 
-        footer {
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            display: flex;
-            justify-content: space-between;
+            .kpi-strip {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 
-<body class="app-shell">
+<body>
 
-    <aside class="drawer">
-        <div class="logo-container">
-            <img src="assets/image/logo.png" alt="Mesokurtic Logo" class="logo-img">
-            <h2 style="margin-top:10px; font-size: 1.2rem;">MESOKURTIC</h2>
-        </div>
+    <aside class="side-nav">
+        <div class="brand-name">MESO<span>KURTIC</span></div>
 
-        <nav class="drawer-nav">
-            <a href="dashboard.html">Overview</a>
-            <a href="operations.html" class="active">Operations</a>
-            <a href="analytics.html">Analytics</a>
-            <div style="flex-grow: 1;"></div> <a href="index.html" style="background: rgba(255,255,255,0.1);">Exit
-                System</a>
-        </nav>
+        <p class="nav-section-label">Platform</p>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="operations.html" class="active">🚚 Operations</a>
+        <a href="analytics.html">📈 Analytics</a>
+        <a href="career.html">Careers</a>
+
+        <p class="nav-section-label">Support</p>
+        <a href="index.html">🏠 Public Home</a>
+        <a href="#">⚙️ Settings</a>
     </aside>
 
-    <main class="dashboard">
+    <div class="main-wrapper">
 
-        <header class="top-header">
-            <div>
-                <span class="brand-context">Logistics Command Centre</span>
-                <h1 style="font-size: 1.75rem; margin-top: 4px;">Operations Control</h1>
-            </div>
-            <div class="actions">
-                <button class="btn-secondary">↻ Refresh Data</button>
-                <button class="btn">+ New Shipment</button>
-            </div>
-        </header>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h1 class="page-title">Fleet Operations</h1>
+            <button class="btn-primary">+ New Dispatch</button>
+        </div>
 
-        <section class="kpi-grid">
-            <article class="kpi-card">
+        <!-- LIVE KPI STRIP -->
+        <div class="kpi-strip">
+            <div class="kpi-card blue">
                 <h3>Active Trucks</h3>
-                <div class="kpi-value">42</div>
-            </article>
-            <article class="kpi-card">
-                <h3>In Transit</h3>
-                <div class="kpi-value">28</div>
-            </article>
-            <article class="kpi-card" style="border-left-color: var(--danger-red);">
-                <h3>Delayed</h3>
-                <div class="kpi-value">3</div>
-            </article>
-            <article class="kpi-card highlight">
-                <h3>Fulfillment</h3>
-                <div class="kpi-value">98.2%</div>
-            </article>
-        </section>
-
-        <section class="panel">
-            <div class="panel-header">
-                <h2>Live Shipment Tracking</h2>
+                <div class="kpi-value" id="kpi-trucks">—</div>
             </div>
+            <div class="kpi-card">
+                <h3>In Transit</h3>
+                <div class="kpi-value" id="kpi-transit">—</div>
+            </div>
+            <div class="kpi-card red">
+                <h3>Delayed</h3>
+                <div class="kpi-value" id="kpi-delayed">—</div>
+            </div>
+            <div class="kpi-card amber">
+                <h3>Fulfillment</h3>
+                <div class="kpi-value" id="kpi-fulfillment">—</div>
+            </div>
+        </div>
 
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Shipment ID</th>
-                        <th>Client</th>
-                        <th>Route</th>
-                        <th>Status</th>
-                        <th>ETA</th>
-                    </tr>
-                </thead>
-                <tbody id="shipment-table-body">
-                    <tr>
-                        <td><strong>#MSK-9901</strong></td>
-                        <td>UAC Nigeria Plc</td>
-                        <td>Lagos → Zaria</td>
-                        <td><span class="status status-transit">In Transit</span></td>
-                        <td>14:30 Today</td>
-                    </tr>
-                    <tr>
-                        <td><strong>#MSK-9902</strong></td>
-                        <td>Livestock Feeds</td>
-                        <td>Ibadan → Kano</td>
-                        <td><span class="status status-delayed">Delayed</span></td>
-                        <td>Tomorrow</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <div class="ops-grid">
 
-        <footer>
-            <span>© 2026 Mesokurtic Supply Chain Ltd</span>
-            <span style="color: var(--success-green);">● System Live</span>
-        </footer>
-    </main>
+            <!-- LIVE SHIPMENT TABLE -->
+            <section class="panel">
+                <h2>
+                    Live Shipment Tracking
+                    <span class="live-dot">● Live</span>
+                </h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Shipment ID</th>
+                            <th>Client</th>
+                            <th>Route</th>
+                            <th>Status</th>
+                            <th>ETA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shipment-tbody">
+                        <tr class="loading-row">
+                            <td colspan="5">Connecting to live feed...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- LIVE DISPATCH QUEUE -->
+            <section class="panel">
+                <h2>Dispatch Queue <span class="live-dot">● Live</span></h2>
+                <ul class="dispatch-list" id="dispatch-list">
+                    <li style="color:#94a3b8; font-size:0.85rem; padding:14px 0;">Loading dispatches...</li>
+                </ul>
+            </section>
+
+        </div>
+    </div>
+
+    <script type="module">
+        import { firebaseAuth } from './firebase-gate.js';
+        import {
+            getFirestore,
+            collection,
+            onSnapshot,
+            query,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // ── Auth guard ───────────────────────────────────────
+        firebaseAuth.onStateChange((user) => {
+            if (!user) window.location.replace("login.html");
+        });
+
+        // ── Firestore instance ───────────────────────────────
+        // We reuse the already-initialised app via the gate
+        import { app } from './firebase-gate.js';
+        const db = getFirestore(app);
+
+        // ── Status badge helper ──────────────────────────────
+        function statusBadge(status) {
+            const map = {
+                'In Transit': 'status s-transit',
+                'Delayed': 'status s-delayed',
+                'Delivered': 'status s-delivered',
+                'Pending': 'status s-pending',
+            };
+            const cls = map[status] || 'status s-pending';
+            return `<span class="${cls}">${status}</span>`;
+        }
+
+        function dispatchBadge(status) {
+            const map = {
+                'Ready': 'badge badge-ready',
+                'Assigning': 'badge badge-pending',
+                'In Review': 'badge badge-review',
+            };
+            const cls = map[status] || 'badge badge-pending';
+            return `<span class="${cls}">${status}</span>`;
+        }
+
+        // ── LIVE: Shipments ──────────────────────────────────
+        // Firestore collection: "shipments"
+        // Document fields: id, client, origin, destination, status, eta
+        const shipmentsQ = query(
+            collection(db, 'shipments'),
+            orderBy('createdAt', 'desc')
+        );
+
+        onSnapshot(shipmentsQ, (snapshot) => {
+            const tbody = document.getElementById('shipment-tbody');
+
+            if (snapshot.empty) {
+                tbody.innerHTML = `<tr class="loading-row"><td colspan="5">No shipments found.</td></tr>`;
+                return;
+            }
+
+            let transitCount = 0;
+            let delayedCount = 0;
+            let deliveredCount = 0;
+            let totalCount = 0;
+
+            tbody.innerHTML = snapshot.docs.map(doc => {
+                const d = doc.data();
+                totalCount++;
+                if (d.status === 'In Transit') transitCount++;
+                if (d.status === 'Delayed') delayedCount++;
+                if (d.status === 'Delivered') deliveredCount++;
+
+                const route = `${d.origin} → ${d.destination}`;
+                const eta = d.eta?.toDate
+                    ? d.eta.toDate().toLocaleTimeString('en-NG', { hour: '2-digit', minute: '2-digit' })
+                    : d.eta || '—';
+
+                return `
+          <tr>
+            <td><strong>${d.id || doc.id}</strong></td>
+            <td>${d.client}</td>
+            <td>${route}</td>
+            <td>${statusBadge(d.status)}</td>
+            <td>${eta}</td>
+          </tr>`;
+            }).join('');
+
+            // Update KPIs from live shipment data
+            document.getElementById('kpi-transit').textContent = transitCount;
+            document.getElementById('kpi-delayed').textContent = delayedCount;
+            const fulfillment = totalCount > 0
+                ? ((deliveredCount / totalCount) * 100).toFixed(1) + '%'
+                : '—';
+            document.getElementById('kpi-fulfillment').textContent = fulfillment;
+        });
+
+        // ── LIVE: Fleet (trucks) ─────────────────────────────
+        // Firestore collection: "fleet"
+        // Document fields: truckId, status ("active" | "idle" | "maintenance")
+        onSnapshot(collection(db, 'fleet'), (snapshot) => {
+            const activeTrucks = snapshot.docs.filter(d => d.data().status === 'active').length;
+            document.getElementById('kpi-trucks').textContent = activeTrucks;
+        });
+
+        // ── LIVE: Dispatch Queue ─────────────────────────────
+        // Firestore collection: "dispatches"
+        // Document fields: orderId, status, origin, destination, tons
+        const dispatchQ = query(
+            collection(db, 'dispatches'),
+            orderBy('createdAt', 'desc')
+        );
+
+        onSnapshot(dispatchQ, (snapshot) => {
+            const list = document.getElementById('dispatch-list');
+
+            if (snapshot.empty) {
+                list.innerHTML = `<li style="color:#94a3b8;font-size:0.85rem;padding:14px 0;">No dispatches queued.</li>`;
+                return;
+            }
+
+            list.innerHTML = snapshot.docs.map(doc => {
+                const d = doc.data();
+                return `
+          <li class="dispatch-item">
+            <div class="item-header">
+              <span>Order ${d.orderId}</span>
+              ${dispatchBadge(d.status)}
+            </div>
+            <div class="item-sub">Route: ${d.origin} → ${d.destination} | ${d.tons} Tons</div>
+          </li>`;
+            }).join('');
+        });
+    </script>
 
 </body>
 

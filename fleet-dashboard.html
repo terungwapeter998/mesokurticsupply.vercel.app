@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Dashboard | Mesokurtic Supply Chain</title>
+    <style>
+        #protected-content {
+            display: none;
+        }
+
+        :root {
+            --primary-blue: #039be5;
+            --accent-orange: #ff9800;
+            --bg-gray: #f8f9fa;
+            --text-dark: #2c3e50;
+            --status-active: #4caf50;
+            --status-transit: #2196f3;
+            --status-maintenance: #f44336;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-gray);
+            margin: 0;
+            color: var(--text-dark);
+        }
+
+        header {
+            background: linear-gradient(135deg, #01579b, var(--primary-blue));
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+        }
+
+        .identity-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .glass-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--accent-orange);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+        }
+
+        .control-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            height: fit-content;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .btn-update {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin-top: -40px;
+        }
+
+        .fleet-card {
+            background: white;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-tag {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading-screen" class="loading-overlay">
+        <p>Verifying Credentials...</p>
+    </div>
+
+    <div id="protected-content">
+        <header>
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+            <h1>MESOKURTIC</h1>
+            <div class="motto">"Our word, our bond. Excellence in every delivery."</div>
+        </header>
+
+        <div class="container">
+            <div class="identity-section">
+                <div class="glass-card">
+                    <h3>Our Vision</h3>
+                    <p>The preferred reference of excellent supply chain service delivery.</p>
+                </div>
+                <div class="glass-card">
+                    <p id="user-welcome" style="font-weight: bold; color: var(--primary-blue);"></p>
+                    <p>Ensure all fleet data entry follows system invariants.</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <aside class="control-panel">
+                    <h3>Asset Registry</h3>
+                    <form id="fleetForm">
+                        <label>Truck Reference ID</label>
+                        <input type="text" id="truckInput" placeholder="e.g. MSK-TRK-102" required>
+
+                        <label>Operational Status</label>
+                        <select id="statusSelect">
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="IN TRANSIT">IN TRANSIT</option>
+                            <option value="MAINTENANCE">MAINTENANCE</option>
+                        </select>
+
+                        <button type="submit" class="btn-update" id="submitBtn">Deploy to Firestore</button>
+                    </form>
+                </aside>
+
+                <section id="fleet-display">
+                    <h3>Live Fleet Status</h3>
+                    <div class="loading-state">Syncing with Cloud...</div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "mesokurtic-live.firebaseapp.com",
+            projectId: "mesokurtic-live",
+            storageBucket: "mesokurtic-live.appspot.com",
+            messagingSenderId: "YOUR_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- 1. AUTHENTICATION CHECK ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                document.getElementById("loading-screen").style.display = "none";
+                document.getElementById("protected-content").style.display = "block";
+                document.getElementById("user-welcome").innerText = `Operator: ${user.email}`;
+                initializeFleetSync(); // Only sync data after login
+            } else {
+                // No user is signed in, redirect to login.html
+                window.location.href = "login.html";
+            }
+        });
+
+        // --- 2. LOGOUT LOGIC ---
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
+            });
+        });
+
+        // --- 3. FIRESTORE SYNC (Only runs if authenticated) ---
+        function initializeFleetSync() {
+            const fleetCollection = collection(db, "fleet");
+            const q = query(fleetCollection, orderBy("createdAt", "desc"));
+
+            onSnapshot(q, (snapshot) => {
+                const display = document.getElementById("fleet-display");
+                let htmlBuffer = `<h3>Live Fleet Status (${snapshot.size})</h3>`;
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    let color = data.status === 'MAINTENANCE' ? "var(--status-maintenance)" :
+                        data.status === 'IN TRANSIT' ? "var(--status-transit)" : "var(--status-active)";
+
+                    htmlBuffer += `
+                    <div class="fleet-card" style="border-left: 8px solid ${color}">
+                        <div>
+                            <strong>${data.truckId}</strong><br>
+                            <small>REF: ${doc.id.substring(0, 8)}</small>
+                        </div>
+                        <div class="status-tag" style="background: ${color}15; color: ${color}">${data.status}</div>
+                    </div>`;
+                });
+                display.innerHTML = htmlBuffer;
+            });
+        }
+
+        // --- 4. DATA ENTRY ---
+        document.getElementById("fleetForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const truckId = document.getElementById("truckInput").value.trim();
+            const status = document.getElementById("statusSelect").value;
+
+            try {
+                await addDoc(collection(db, "fleet"), {
+                    truckId,
+                    status,
+                    createdAt: serverTimestamp(),
+                    author: auth.currentUser.email // Tracking who made the change
+                });
+                document.getElementById("truckInput").value = "";
+            } catch (err) {
+                alert("Integrity Error: You do not have write permissions.");
+            }
+        });
+    </script>
+</body>
+
+</html>

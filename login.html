@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Mesokurtic Supply Chain</title>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;800&display=swap"
         rel="stylesheet">
 
     <style>
@@ -15,218 +13,120 @@
             --primary-navy: #0f172a;
             --accent-green: #22c55e;
             --white: #ffffff;
-            --slate-text: #64748b;
-            --bg-gradient: radial-gradient(circle at top left, #1e293b, #0f172a);
+            --text-slate: #475569;
+            --bg-light: #f1f5f9;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background: var(--bg-gradient);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--primary-navy);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            color: var(--white);
-            overflow: hidden;
+            /* Subtle background pattern for a technical feel */
+            background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
         }
 
-        /* --- TOPBAR --- */
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            z-index: 1000;
-        }
-
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
+        .login-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         .logo-img {
-            height: 40px;
-            width: auto;
+            height: 60px;
+            margin-bottom: 15px;
         }
 
         .brand-name {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--white);
+            font-size: 1.6rem;
+            margin-bottom: 35px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: -0.5px;
         }
 
         .brand-name span {
             color: var(--accent-green);
         }
 
-        .menu-btn {
-            font-size: 28px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: var(--white);
-        }
-
-        /* --- LOGIN CARD --- */
-        .auth-container {
-            flex: 1;
+        .login-form {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .auth-card {
-            background: var(--white);
-            color: var(--primary-navy);
-            width: 100%;
-            max-width: 420px;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        .input-group {
+            text-align: left;
         }
 
-        .auth-card h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .auth-card p {
-            font-size: 0.85rem;
-            color: var(--slate-text);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        /* --- FORM ELEMENTS --- */
-        form label {
+        .input-group label {
             display: block;
-            font-size: 0.75rem;
             font-weight: 700;
-            text-transform: uppercase;
+            font-size: 0.75rem;
             margin-bottom: 8px;
-            letter-spacing: 0.5px;
+            color: var(--text-slate);
+            letter-spacing: 0.1em;
         }
 
-        form input {
+        .input-group input {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
             border-radius: 8px;
-            background: #f8fafc;
             font-size: 1rem;
-            transition: 0.2s ease;
+            outline: none;
+            transition: all 0.3s;
         }
 
-        form input:focus {
-            outline: none;
+        .input-group input:focus {
             border-color: var(--accent-green);
-            background: white;
             box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
         }
 
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
+        .login-btn {
             background: var(--primary-navy);
             color: white;
+            padding: 16px;
             border: none;
             border-radius: 8px;
             font-weight: 700;
-            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
             cursor: pointer;
-            transition: 0.3s;
-            margin-top: 5px;
+            transition: all 0.3s;
+            margin-top: 10px;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        .btn-primary:hover {
+        .login-btn:hover {
             background: #1e293b;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
-        /* --- FOOTER --- */
-        .footer {
-            padding: 25px;
-            text-align: center;
+        .login-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .footer-note {
+            margin-top: 30px;
             font-size: 0.75rem;
-            opacity: 0.6;
-            color: var(--white);
-        }
-
-        /* --- SIDE DRAWER --- */
-        .side-nav {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 310px;
-            height: 100%;
-            background: var(--primary-navy);
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 60px 30px;
-            z-index: 1001;
-            display: flex;
-            flex-direction: column;
-            color: var(--white);
-        }
-
-        .side-nav.active {
-            right: 0;
-        }
-
-        .nav-label {
-            color: #64748b;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            margin: 25px 0 10px;
-            font-weight: 700;
-        }
-
-        .side-nav a {
-            color: #cbd5e1;
-            text-decoration: none;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.95rem;
-        }
-
-        .side-nav a:hover {
-            color: var(--accent-green);
-            padding-left: 10px;
-        }
-
-        .close-btn {
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        /* --- LARGER PORTAL BUTTON (Synchronized Size) --- */
-        .portal-link-active {
-            margin-top: 40px;
-            background: var(--accent-green) !important;
-            color: var(--primary-navy) !important;
-            text-align: center;
-            font-weight: 800;
-            border-radius: 10px;
-            display: block;
-            padding: 20px 10px !important;
-            font-size: 1.2rem !important;
+            color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -234,81 +134,57 @@
 </head>
 
 <body>
+    <div class="login-container">
+        <img src="assets/image/logo.png" alt="Mesokurtic" class="logo-img">
+        <div class="brand-name">MESO<span>KURTIC</span></div>
 
-    <header class="topbar">
-        <a href="index.html" class="brand-container">
-            <img src="assets/image/logo.png" alt="Logo" class="logo-img">
-            <h1 class="brand-name">MESO<span>KURTIC</span></h1>
-        </a>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    </header>
+        <form id="login-form" class="login-form">
+            <div class="input-group">
+                <label for="email">ADMINISTRATOR ID</label>
+                <input type="email" id="email" name="email" required placeholder="admin@mesokurtic.com">
+            </div>
 
-    <nav class="side-nav" id="sideNav">
-        <span class="close-btn" onclick="toggleMenu()">×</span>
-        <p class="nav-label">Corporate</p>
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="career.html">Careers</a>
-        <a href="services.html">Services</a>
-        <p class="nav-label">Management</p>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="operations.html">Operations</a>
-        <a href="login.html" class="portal-link-active">Portal Active</a>
-    </nav>
+            <div class="input-group">
+                <label for="password">SECURITY KEY</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••">
+            </div>
 
-    <main class="auth-container">
-        <section class="auth-card">
-            <h1>System Login</h1>
-            <p>Enter your credentials to access the logistics control center.</p>
+            <button type="submit" id="submit-btn" class="login-btn">INITIALIZE SESSION</button>
+        </form>
 
-            <form id="login-form">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="admin@mesokurtic.com" required
-                    autocomplete="username">
+        <div class="footer-note">Secure Logistics Gateway &copy; 2026</div>
+    </div>
 
-                <label for="password">Security Password</label>
-                <input type="password" id="password" name="password" placeholder="••••••••" required
-                    autocomplete="current-password">
+    <script type="module">
+        import { auth, signInWithEmailAndPassword } from './firebase-gate.js';
 
-                <button type="submit" class="btn-primary">
-                    Secure Login
-                </button>
-            </form>
-        </section>
-    </main>
+        const loginForm = document.querySelector('#login-form');
+        const submitBtn = document.querySelector('#submit-btn');
 
-    <footer class="footer">
-        <p>&copy; 2026 Mesokurtic Supply Chain Limited. All Rights Reserved.</p>
-    </footer>
-
-    <script>
-        function toggleMenu() {
-            document.getElementById('sideNav').classList.toggle('active');
-        }
-
-        // Handle Login Submission
-        document.getElementById('login-form').addEventListener('submit', function (e) {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
 
-            console.log("Authentication logic triggering for:", email);
+            // Visual feedback for state change
+            submitBtn.disabled = true;
+            submitBtn.innerText = "VERIFYING...";
 
-            // For now, simple simulation
-            if (email && password) {
-                alert("Authenticating... Redirecting to Dashboard.");
-                window.location.href = "dashboard.html";
-            }
-        });
+            const email = loginForm['email'].value;
+            const password = loginForm['password'].value;
 
-        // Close navigation on outside click
-        document.addEventListener('click', (e) => {
-            const nav = document.getElementById('sideNav');
-            const btn = document.querySelector('.menu-btn');
-            if (nav.classList.contains('active')) {
-                if (!nav.contains(e.target) && !btn.contains(e.target)) {
-                    nav.classList.remove('active');
-                }
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+
+                // Set session local storage to assist menu.html dynamic links
+                localStorage.setItem('mesokurtic_admin_session', 'true');
+
+                window.location.replace("dashboard.html");
+            } catch (error) {
+                console.error("Login Error:", error.code);
+                alert("Authorization Denied: " + error.message);
+
+                // Reset state on failure
+                // submitBtn.disabled = false;
+                submitBtn.innerText = "INITIALIZE SESSION";
             }
         });
     </script>

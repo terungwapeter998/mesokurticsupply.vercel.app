@@ -4,303 +4,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Mesokurtic Supply Chain</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;500;600&display=swap"
+    <title>Navigation Menu | Mesokurtic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap"
         rel="stylesheet">
-
     <style>
         :root {
             --primary-navy: #0f172a;
             --accent-green: #22c55e;
             --white: #ffffff;
-            --text-slate: #475569;
-            --overlay: rgba(15, 23, 42, 0.8);
             --bg-light: #f1f5f9;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --text-slate: #cbd5e1;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--primary-navy);
-            line-height: 1.6;
-        }
-
-        /* --- NAVBAR --- */
-        .navbar {
+            background-color: #000;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            background: var(--white);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            justify-content: flex-end;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
         }
 
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            height: 50px;
-            width: auto;
-        }
-
-        .brand-name {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--primary-navy);
-            text-transform: uppercase;
-        }
-
-        .brand-name span {
-            color: var(--accent-green);
-        }
-
-        .menu-btn {
-            font-size: 32px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: var(--primary-navy);
-        }
-
-        /* --- HERO HEADER --- */
-        .page-header {
-            background: linear-gradient(var(--overlay), var(--overlay)),
-                url('assets/image/hero-bg.png');
-            background-size: cover;
-            background-position: center;
-            padding: 100px 5%;
-            color: white;
-            text-align: center;
-        }
-
-        .page-header h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        /* --- DIRECTOR CARDS --- */
-        .container {
-            max-width: 1100px;
-            margin: -60px auto 50px;
-            padding: 0 20px;
-        }
-
-        .director-card {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            transition: transform 0.3s ease;
-        }
-
-        .director-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .director-img {
-            width: 350px;
-            height: 450px;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            background-color: #e2e8f0;
-        }
-
-        .director-text h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            color: var(--primary-navy);
-            margin-bottom: 20px;
-            border-left: 5px solid var(--accent-green);
-            padding-left: 15px;
-        }
-
-        .director-text p {
-            margin-bottom: 15px;
-            color: var(--text-slate);
-            font-size: 1.05rem;
-        }
-
-        /* --- SIDE NAVIGATION --- */
-        .side-nav {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100%;
+        .menu-card {
             background: var(--primary-navy);
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 60px 30px;
-            z-index: 1001;
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
+            position: relative;
+            animation: slideIn 0.4s ease-out;
+            overflow-y: auto;
         }
 
-        .side-nav.active {
-            right: 0;
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .hero-section {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.7);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.2), var(--primary-navy));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .menu-content {
+            padding: 0 40px 40px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .close-btn {
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
             position: absolute;
             top: 20px;
             right: 20px;
+            color: white;
+            font-size: 2.2rem;
+            text-decoration: none;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .brand {
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            text-decoration: none;
+            margin-bottom: 5px;
+        }
+
+        .brand span {
+            color: var(--accent-green);
         }
 
         .nav-label {
             color: #64748b;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            margin: 25px 0 10px;
+            margin: 25px 0 8px;
             font-weight: 700;
+            letter-spacing: 1.5px;
         }
 
-        .side-nav a {
-            color: #cbd5e1;
+        .menu-card a:not(.brand, .close-btn) {
+            color: var(--text-slate);
             text-decoration: none;
-            padding: 12px 0;
+            padding: 14px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.95rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .side-nav a:hover {
+        .menu-card a:hover:not(.portal-link) {
             color: var(--accent-green);
             padding-left: 10px;
         }
 
+        .lock-icon {
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
         .portal-link {
-            margin-top: 40px;
+            margin-top: 30px;
             background: var(--accent-green);
             color: var(--primary-navy) !important;
             text-align: center;
             font-weight: 700;
             border-radius: 8px;
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 900px) {
-            .director-card {
-                flex-direction: column;
-                text-align: center;
-                padding: 30px;
-            }
-
-            .director-img {
-                width: 100%;
-                height: auto;
-                max-width: 350px;
-            }
-
-            .director-text h2 {
-                border-left: none;
-                padding-left: 0;
-            }
-
-            .page-header h1 {
-                font-size: 2.2rem;
-            }
+            padding: 15px !important;
+            justify-content: center !important;
+            transition: transform 0.2s;
         }
     </style>
 </head>
 
 <body>
 
-    <header class="navbar">
-        <a href="index.html" class="brand-container">
-            <img src="assets/image/logo.png" alt="Logo" class="logo-img">
-            <h1 class="brand-name">MESO<span>KURTIC</span></h1>
-        </a>
-        <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle Menu">☰</button>
-    </header>
+    <div class="menu-card">
+        <a href="javascript:history.back()" class="close-btn">&times;</a>
 
-    <nav class="side-nav" id="sideNav">
-        <span class="close-btn" onclick="toggleMenu()">×</span>
-        <p class="nav-label">Corporate</p>
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="career.html">Careers</a> <a href="services.html">Services</a>
-        <p class="nav-label">Management</p>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="operations.html">Operations</a>
-        <a href="analytics.html">Analytics</a>
-        <a href="login.html" class="portal-link">Portal Login</a>
-    </nav>
-
-    <header class="page-header">
-        <h1>ABOUT US</h1>
-        <p>Directors and Management Profile</p>
-    </header>
-
-    <main class="container">
-
-        <section class="director-card">
-            <img src="assets/image/director.jpg" alt="Mr. Ademeso Olakunle Samuel" class="director-img">
-            <div class="director-text">
-                <h2>Mr. Ademeso Olakunle Samuel</h2>
-                <p><strong>Education:</strong> Graduate of Physics (OAU, Ile-Ife); MSc in Procurement & Supply Chain
-                    Management (LAUTECH).</p>
-                <p><strong>Professional:</strong> Member of CISCM and CIWMM. Diploma in Transport and Logistics
-                    Management.</p>
-                <p><strong>Career:</strong> Serving as Supply Chain Specialist at Dangote Petroleum Refinery and
-                    Petrochemicals since 2020.</p>
+        <div class="hero-section">
+            <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1000"
+                alt="Mesokurtic Logistics" class="hero-img">
+            <div class="hero-overlay">
+                <a href="index.html" class="brand">
+                    MESO<span>KURTIC</span>
+                </a>
+                <div style="color:rgba(255,255,255,0.6); font-size: 0.8rem;">Supply Chain Excellence</div>
             </div>
-        </section>
+        </div>
 
-        <section class="director-card">
-            <img src="assets/image/director2.jpg" alt="Mrs. Eneji Taiwo Abiola" class="director-img">
-            <div class="director-text">
-                <h2>Mrs. Eneji Taiwo Abiola</h2>
-                <p><strong>Experience:</strong> Over a decade of expertise in sourcing, category management, and supply
-                    chain operations.</p>
-                <p><strong>Education:</strong> BBA (Lead City University); MSc candidate in Logistics and Supply Chain
-                    (Rome Business School).</p>
-                <p><strong>Career:</strong> Currently Category Manager (Indirect) at Livestock Feeds Plc (UAC Nigeria
-                    Plc).</p>
-            </div>
-        </section>
+        <div class="menu-content">
+            <p class="nav-label">Corporate</p>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="career.html">Careers</a>
+            <a href="contact.html">Contact</a>
 
-    </main>
+            <p class="nav-label">Operational Intelligence</p>
+            <a href="dashboard.html">Dashboard <span class="lock-icon">🔒</span></a>
+            <a href="operations.html">Logistics Fleet <span class="lock-icon">🔒</span></a>
+            <a href="analytics.html">System Analytics <span class="lock-icon">🔒</span></a>
 
-    <footer style="text-align: center; padding: 40px; color: var(--text-slate); font-size: 0.85rem;">
-        <p>&copy; 2026 Mesokurtic Supply Chain Limited. All Rights Reserved.</p>
-    </footer>
+            <a href="login.html" id="auth-gate-link" class="portal-link">Admin Access</a>
+        </div>
+    </div>
 
     <script>
-        function toggleMenu() {
-            document.getElementById('sideNav').classList.toggle('active');
-        }
+        const portalLink = document.getElementById('auth-gate-link');
+        const sessionActive = localStorage.getItem('mesokurtic_admin_session') === 'true';
 
-        document.addEventListener('click', (e) => {
-            const nav = document.getElementById('sideNav');
-            const btn = document.querySelector('.menu-btn');
-            if (nav.classList.contains('active')) {
-                if (!nav.contains(e.target) && !btn.contains(e.target)) {
-                    nav.classList.remove('active');
-                }
-            }
-        });
+        if (sessionActive) {
+            portalLink.innerText = "Open Console";
+            portalLink.href = "dashboard.html";
+        } else {
+            portalLink.innerText = "Admin Login";
+            portalLink.href = "login.html";
+        }
     </script>
 </body>
 

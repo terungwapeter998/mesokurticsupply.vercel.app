@@ -6,350 +6,332 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Mesokurtic Supply Chain</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap"
         rel="stylesheet">
 
     <style>
-        :root {
-            --primary-navy: #0f172a;
-            --accent-green: #22c55e;
-            --sidebar-width: 280px;
-            --bg-body: #f8fafc;
-            --white: #ffffff;
-            /* Status Colors */
-            --status-transit: #3b82f6;
-            --status-loading: #f59e0b;
-            --status-delayed: #ef4444;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
-
+        /* 🛡️ AUTH INVARIANT: Hidden until session is verified */
         body {
-            background-color: var(--bg-body);
+            display: none;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .container {
             display: flex;
-            /* Creates the sidebar-content layout */
             min-height: 100vh;
         }
 
-        /* --- LOGO / BRANDING --- */
-        .brand-name {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 40px;
-            padding: 0 10px;
-        }
-
-        .brand-name span {
-            color: var(--accent-green);
-        }
-
-        /* --- SIDEBAR (Persistent on Desktop) --- */
-        .side-nav {
-            width: var(--sidebar-width);
-            background: var(--primary-navy);
+        /* --- Sidebar Architecture --- */
+        .sidebar {
+            width: 260px;
+            background: #0f172a;
             color: white;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
             position: fixed;
             height: 100vh;
-            left: 0;
-            top: 0;
-            z-index: 1001;
-            transition: left 0.3s ease;
-        }
-
-        .nav-label {
-            color: #64748b;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin: 25px 0 10px;
-            letter-spacing: 1px;
-        }
-
-        .side-nav a {
-            color: #cbd5e1;
-            text-decoration: none;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 5px;
             display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
-            transition: 0.2s;
+            flex-direction: column;
+            z-index: 100;
         }
 
-        .side-nav a:hover,
-        .side-nav a.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--accent-green);
+        .sidebar-header {
+            padding: 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid #1e293b;
         }
 
-        .logout-btn {
-            margin-top: auto;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444 !important;
+        .sidebar-header span {
+            color: #22c55e;
         }
 
-        /* --- MAIN CONTENT AREA --- */
-        .main-wrapper {
-            margin-left: var(--sidebar-width);
+        .nav {
+            padding: 16px;
             flex: 1;
-            padding: 40px 5%;
         }
 
-        .header-area {
+        .nav a {
+            display: block;
+            padding: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: #1e293b;
+            color: white;
+        }
+
+        .logout {
+            margin: 16px;
+            padding: 12px;
+            background: #ef4444;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .logout:hover {
+            opacity: 0.9;
+        }
+
+        /* --- Main Content --- */
+        .main {
+            margin-left: 260px;
+            padding: 40px;
+            flex: 1;
+        }
+
+        .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
-        .header-area h1 {
+        .topbar h2 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            color: var(--primary-navy);
+            font-size: 1.6rem;
+            font-weight: 800;
         }
 
-        .admin-badge {
-            background: #dcfce7;
-            color: #166534;
-            padding: 6px 12px;
-            border-radius: 20px;
+        .topbar p {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .date-badge {
             font-size: 0.8rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 8px 16px;
+            color: #475569;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
-        /* --- KPI CARDS --- */
-        .kpi-grid {
+        /* --- Stats Grid --- */
+        .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
-        .kpi-card {
-            background: var(--white);
-            padding: 25px;
+        .stat-card {
+            background: white;
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
         }
 
-        .kpi-card h3 {
-            font-size: 0.85rem;
+        .stat-card .label {
+            font-size: 0.7rem;
+            font-weight: 700;
             color: #64748b;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
         }
 
-        .kpi-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-navy);
+        .stat-card .value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0f172a;
         }
 
-        .kpi-card.highlight {
-            border-bottom: 4px solid var(--accent-green);
+        .stat-card .sub {
+            font-size: 0.8rem;
+            color: #22c55e;
+            font-weight: 600;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        /* --- DATA TABLE --- */
-        .panel {
-            background: var(--white);
+        /* --- Status Section --- */
+        .card {
+            background: white;
             border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        .panel h2 {
-            font-size: 1.2rem;
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
             margin-bottom: 20px;
-            color: var(--primary-navy);
         }
 
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        .data-table th {
-            padding: 15px;
-            background: #f1f5f9;
-            color: #475569;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-        }
-
-        .data-table td {
-            padding: 15px;
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
             border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
-            color: var(--primary-navy);
         }
 
-        /* Status Badges */
-        .status {
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
+        .status-row:last-child {
+            border-bottom: none;
+        }
+
+        .pill {
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
             text-transform: uppercase;
         }
 
-        .in-transit {
-            background: #dbeafe;
-            color: #1e40af;
+        .pill.green {
+            background: #dcfce7;
+            color: #15803d;
         }
 
-        .loading {
-            background: #fef3c7;
-            color: #92400e;
+        .pill.amber {
+            background: #fef9c3;
+            color: #a16207;
         }
 
-        .delayed {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 1024px) {
-            .side-nav {
-                left: -300px;
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
             }
 
-            .side-nav.active {
-                left: 0;
+            .sidebar-header,
+            .nav a span,
+            .logout {
+                display: none;
             }
 
-            .main-wrapper {
-                margin-left: 0;
+            .main {
+                margin-left: 70px;
             }
-
-            .menu-trigger {
-                display: block;
-            }
-        }
-
-        .menu-trigger {
-            display: none;
-            font-size: 24px;
-            background: none;
-            border: none;
-            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">MESO<span>KURTIC</span></div>
+            <nav class="nav">
+                <a href="dashboard.html" class="active"><span>Dashboard</span></a>
+                <a href="operations.html"><span>Logistics</span></a>
+                <a href="analytics.html"><span>Analytics</span></a>
+            </nav>
+            <button id="logout-btn" class="logout">Logout</button>
+        </aside>
 
-    <aside class="side-nav" id="sideNav">
-        <div class="brand-name">MESO<span>KURTIC</span></div>
-
-        <p class="nav-label">Management</p>
-        <a href="dashboard.html" class="active">📊 Dashboard</a>
-        <a href="operations.html">🚚 Operations</a>
-        <a href="analytics.html">📈 Analytics</a>
-
-        <p class="nav-label">Corporate</p>
-        <a href="index.html">🏠 Home Page</a>
-        <a href="about.html">👥 About Us</a>
-        <a href="career.html">Careers</a>
-
-        <a href="#" class="logout-btn">🔒 Logout</a>
-    </aside>
-
-    <div class="main-wrapper">
-        <header class="header-area">
-            <button class="menu-trigger" onclick="toggleMenu()">☰</button>
-            <h1>System Overview</h1>
-            <div class="admin-badge">
-                <span>🛡️</span> Registered Admin
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <h2>System Overview</h2>
+                    <p>Operator: <span id="admin-email" style="color: #0f172a; font-weight: 600;">...</span></p>
+                </div>
+                <div class="date-badge" id="date"></div>
             </div>
-        </header>
 
-        <section class="kpi-grid">
-            <div class="kpi-card">
-                <h3>Active Fleet</h3>
-                <p class="kpi-value">128</p>
+            <div class="cards">
+                <div class="stat-card">
+                    <div class="label">Total Shipments</div>
+                    <div class="value" id="stat-shipments">0</div>
+                    <div class="sub">▲ Live Data Feed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Operational Hubs</div>
+                    <div class="value">17</div>
+                    <div class="sub">No interruptions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Fleet Utilization</div>
+                    <div class="value">99.2%</div>
+                    <div class="sub">Optimized</div>
+                </div>
             </div>
-            <div class="kpi-card">
-                <h3>Deliveries Today</h3>
-                <p class="kpi-value">342</p>
-            </div>
-            <div class="kpi-card">
-                <h3>Warehouse Use</h3>
-                <p class="kpi-value">76%</p>
-            </div>
-            <div class="kpi-card highlight">
-                <h3>OTIF Rate</h3>
-                <p class="kpi-value" style="color:var(--accent-green)">98.2%</p>
-            </div>
-        </section>
 
-        <section class="panel">
-            <h2>Live Operations Overview</h2>
-            <div class="table-wrapper">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Vehicle ID</th>
-                            <th>Status</th>
-                            <th>Location</th>
-                            <th>ETA</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>TRK-001</td>
-                            <td><span class="status in-transit">In Transit</span></td>
-                            <td>Lagos - Apapa</td>
-                            <td>14:30</td>
-                        </tr>
-                        <tr>
-                            <td>TRK-002</td>
-                            <td><span class="status loading">Loading</span></td>
-                            <td>Abuja - Depot</td>
-                            <td>--</td>
-                        </tr>
-                        <tr>
-                            <td>TRK-045</td>
-                            <td><span class="status delayed">Delayed</span></td>
-                            <td>Kano - Route A</td>
-                            <td>19:00</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="card">
+                <h3>Core Infrastructure Status</h3>
+                <div class="status-row"><span>Logistics API</span><span class="pill green">OPERATIONAL</span></div>
+                <div class="status-row"><span>Firebase Auth</span><span class="pill green">OPERATIONAL</span></div>
+                <div class="status-row"><span>Analytics Engine</span><span class="pill green">OPERATIONAL</span></div>
+                <div class="status-row"><span>Route Optimizer</span><span class="pill amber">DEGRADED</span></div>
             </div>
-        </section>
-
-        <footer style="margin-top: 40px; color: #94a3b8; font-size: 0.8rem; text-align: center;">
-            &copy; 2026 Mesokurtic Supply Chain Limited | Admin Secure Terminal
-        </footer>
+        </main>
     </div>
 
-    <script>
-        function toggleMenu() {
-            document.getElementById('sideNav').classList.toggle('active');
-        }
+    <script type="module">
+        import { firebaseAuth } from './firebase-gate.js';
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const emailEl = document.getElementById('admin-email');
+        const logoutBtn = document.getElementById('logout-btn');
+        const dateEl = document.getElementById('date');
+        const statShipments = document.getElementById('stat-shipments');
+
+        // 1. Set Local Date
+        dateEl.innerText = new Date().toLocaleDateString('en-GB', {
+            day: 'numeric', month: 'long', year: 'numeric'
+        });
+
+        // 2. Auth Guard Invariant
+        let authResolved = false;
+
+        firebaseAuth.onStateChange((user) => {
+            if (!user) {
+                localStorage.setItem('mesokurtic_admin_session', 'false');
+                window.location.replace("login.html");
+                return;
+            }
+
+            // Success State
+            authResolved = true;
+            localStorage.setItem('mesokurtic_admin_session', 'true');
+            emailEl.innerText = user.email;
+            document.body.style.display = "block";
+
+            // 3. Optional: Connect real-time counts
+            const db = getFirestore();
+            onSnapshot(collection(db, 'shipments'), (snap) => {
+                statShipments.innerText = snap.size;
+            });
+        });
+
+        // Safety redirect if auth hangs
+        setTimeout(() => {
+            if (!authResolved) window.location.replace("login.html");
+        }, 4000);
+
+        // 4. Corrected Logout Logic
+        logoutBtn.addEventListener('click', async () => {
+            if (confirm("Confirm system logout?")) {
+                try {
+                    await firebaseAuth.signOut();
+                    localStorage.setItem('mesokurtic_admin_session', 'false');
+                    window.location.replace("login.html");
+                } catch (err) {
+                    console.error("Critical: Logout failed", err);
+                }
+            }
+        });
     </script>
 </body>
 

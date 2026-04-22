@@ -4,22 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesokurtic | Excellence in Logistics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>Mesokurtic | Supply Chain Intelligence</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@800&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --primary-navy: #0f172a;
             --accent-green: #22c55e;
             --white: #ffffff;
+            --text-slate: #475569;
             --overlay: rgba(15, 23, 42, 0.75);
-            --slate-400: #94a3b8;
+            --bg-light: #f8fafc;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--primary-navy);
+            line-height: 1.6;
         }
 
         /* --- NAVBAR --- */
@@ -27,238 +37,192 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
+            padding: 12px 5%;
             background: var(--white);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        .brand-container {
+        .logo-container {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             text-decoration: none;
         }
 
+        /* LOGO INVARIANT: Fixed height ensures UI stability */
         .logo-img {
-            height: 45px;
+            height: 50px;
             width: auto;
-            object-fit: contain;
+            display: block;
         }
 
         .brand-name {
+            font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            text-transform: uppercase;
             color: var(--primary-navy);
             letter-spacing: -0.5px;
-            text-transform: uppercase;
         }
 
         .brand-name span {
             color: var(--accent-green);
         }
 
-        .menu-btn {
-            font-size: 32px;
-            cursor: pointer;
-            border: none;
-            background: none;
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .menu-trigger {
+            text-decoration: none;
             color: var(--primary-navy);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding: 8px 20px;
+            border: 2px solid var(--primary-navy);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .menu-trigger:hover {
+            background: var(--primary-navy);
+            color: white;
         }
 
         /* --- HERO SECTION --- */
         .hero {
             position: relative;
-            height: 80vh;
-            /* Adjusted height to accommodate footer */
-            width: 100%;
-            background: linear-gradient(var(--overlay), var(--overlay)),
-                url('assets/image/inventory.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            height: 85vh;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             text-align: center;
             color: white;
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 20px;
         }
 
         .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 24px;
         }
 
         .hero-content p {
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--accent-green);
-            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            color: #e2e8f0;
         }
 
-        /* --- SIDE MENU --- */
-        .side-nav {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100%;
-            background: var(--primary-navy);
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 60px 30px;
-            z-index: 1001;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .side-nav.active {
-            right: 0;
-        }
-
-        .close-btn {
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        .nav-section-label {
-            color: #64748b;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin: 25px 0 10px 0;
-            letter-spacing: 1.5px;
-        }
-
-        .side-nav a {
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 12px 0;
-            transition: 0.3s;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .side-nav a:hover {
-            color: var(--accent-green);
-            padding-left: 10px;
-        }
-
-        .portal-link {
-            margin-top: 40px;
+        .cta-button {
             background: var(--accent-green);
-            color: var(--primary-navy) !important;
-            text-align: center;
-            font-weight: 700;
-            border-radius: 8px;
-        }
-
-        /* --- FOOTER / COPYRIGHT --- */
-        .footer {
-            background: var(--primary-navy);
-            padding: 40px 5%;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer p {
-            color: var(--slate-400);
-            font-size: 0.9rem;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-
-        .footer .legal-links {
-            margin-top: 15px;
-        }
-
-        .footer .legal-links a {
-            color: var(--accent-green);
+            color: var(--primary-navy);
+            padding: 20px 45px;
             text-decoration: none;
-            font-size: 0.8rem;
-            margin: 0 10px;
-            transition: 0.3s;
-            opacity: 0.8;
+            font-weight: 800;
+            border-radius: 8px;
+            text-transform: uppercase;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
         }
 
-        .footer .legal-links a:hover {
-            opacity: 1;
-            text-decoration: underline;
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(34, 197, 94, 0.4);
+        }
+
+        /* --- FEATURES --- */
+        .features {
+            padding: 80px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1300px;
+            margin: -60px auto 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            border-top: 4px solid var(--accent-green);
+        }
+
+        footer {
+            background: var(--primary-navy);
+            color: #94a3b8;
+            padding: 60px 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 80px;
         }
     </style>
 </head>
 
 <body>
 
-    <header class="navbar">
-        <div class="brand-container">
-            <img src="assets/image/logo.png" alt="Logo" class="logo-img">
-            <h1 class="brand-name">MESO<span>KURTIC</span></h1>
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="assets/image/logo.png" alt="Mesokurtic Logo" class="logo-img">
+            <div class="brand-name">MESO<span>KURTIC</span></div>
+        </a>
+        <div class="nav-links">
+            <a href="menu.html" class="menu-trigger">Menu</a>
+            <a href="login.html"
+                style="text-decoration: none; font-weight: 600; font-size: 0.9rem; color: var(--primary-navy);">Login</a>
         </div>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    </header>
-
-    <nav class="side-nav" id="sideNav">
-        <span class="close-btn" onclick="toggleMenu()">×</span>
-
-        <p class="nav-section-label">Corporate</p>
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="services.html">Services</a>
-        <a href="career.html">Careers</a>
-
-        <p class="nav-section-label">Management</p>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="operations.html">Operations</a>
-        <a href="analytics.html">Analytics</a>
-
-        <a href="login.html" class="portal-link">Portal Login</a>
     </nav>
 
-    <main class="hero">
+    <section class="hero">
         <div class="hero-content">
-            <h1>System Overview</h1>
-            <p>Intelligence in Motion</p>
+            <h1>Engineered Logistics</h1>
+            <p>Deploying high-integrity supply chain infrastructure and real-time fleet intelligence across the
+                continent.</p>
+            <a href="dashboard.html" class="cta-button">Access Console</a>
         </div>
-    </main>
+    </section>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2026 Mesokurtic Supply Chain Limited. All Rights Reserved.</p>
-            <div class="legal-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Compliance</a>
-            </div>
+    <div class="features">
+        <div class="feature-card">
+            <h3>Fleet Intelligence</h3>
+            <p>Real-time data synchronization for every vehicle in our network using edge-based telemetry.</p>
         </div>
+        <div class="feature-card">
+            <h3>Inventory Flow</h3>
+            <p>Optimized logistics pathways designed for maximum efficiency and continental scale.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Digital Infrastructure</h3>
+            <p>Hexagonal software architectures supporting the world's most complex physical supply chains.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Mesokurtic Supply Chain Limited.
+        <br>
+        <span style="font-size: 0.7rem; opacity: 0.5; margin-top: 10px; display: block;">STABLE INFRASTRUCTURE |
+            REAL-TIME INTELLIGENCE</span>
     </footer>
 
-    <script>
-        function toggleMenu() {
-            document.getElementById('sideNav').classList.toggle('active');
-        }
-
-        document.addEventListener('click', (e) => {
-            const nav = document.getElementById('sideNav');
-            const btn = document.querySelector('.menu-btn');
-            if (!nav.contains(e.target) && !btn.contains(e.target) && nav.classList.contains('active')) {
-                nav.classList.remove('active');
-            }
-        });
-    </script>
 </body>
 
 </html>

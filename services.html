@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Services | Mesokurtic Supply Chain</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -14,29 +15,30 @@
             --white: #ffffff;
             --text-slate: #475569;
             --overlay: rgba(15, 23, 42, 0.85);
+            --bg-light: #f8fafc;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif;
         }
 
         body {
-            background-color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
             color: var(--primary-navy);
             line-height: 1.6;
         }
 
-        /* --- NAVBAR (Same as Index/About) --- */
+        /* --- NAVBAR --- */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
             background: var(--white);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -50,13 +52,14 @@
         }
 
         .logo-img {
-            height: 50px;
+            height: 45px;
             width: auto;
         }
 
         .brand-name {
+            font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--primary-navy);
             text-transform: uppercase;
         }
@@ -66,89 +69,110 @@
         }
 
         .menu-btn {
-            font-size: 32px;
+            font-size: 28px;
             cursor: pointer;
             border: none;
             background: none;
             color: var(--primary-navy);
+            transition: 0.3s;
+        }
+
+        .menu-btn:hover {
+            color: var(--accent-green);
         }
 
         /* --- HERO HEADER --- */
         .page-header {
             background: linear-gradient(var(--overlay), var(--overlay)),
-                url('./assets/image/hero-bg.png');
+                url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=2075&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            padding: 100px 5%;
+            padding: 120px 5%;
             color: white;
             text-align: center;
         }
 
         .page-header h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
         }
 
         .page-header p {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto;
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 1.15rem;
+            color: #cbd5e1;
         }
 
         /* --- SERVICES GRID --- */
         .container {
-            max-width: 1200px;
-            margin: -40px auto 60px;
-            padding: 0 20px;
+            max-width: 1250px;
+            margin: -60px auto 80px;
+            padding: 0 25px;
+            position: relative;
+            z-index: 10;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
 
         .service-card {
             background: var(--white);
             border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border-top: 5px solid var(--accent-green);
-            transition: transform 0.3s ease;
+            padding: 45px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transform: translateY(-12px);
+            border-bottom: 4px solid var(--accent-green);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card .icon-box {
+            color: var(--accent-green);
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
 
         .service-card h2 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 18px;
             color: var(--primary-navy);
+            letter-spacing: -0.5px;
         }
 
         .service-card p {
             color: var(--text-slate);
-            font-size: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        /* --- SIDE NAVIGATION --- */
+        /* --- SIDE NAVIGATION (Matching Menu.html Style) --- */
         .side-nav {
             position: fixed;
             top: 0;
-            right: -320px;
-            width: 300px;
+            right: -100%;
+            width: 100%;
+            max-width: 350px;
             height: 100%;
             background: var(--primary-navy);
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 60px 30px;
-            z-index: 1001;
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            padding: 80px 40px;
+            z-index: 2000;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
         }
 
         .side-nav.active {
@@ -157,44 +181,53 @@
 
         .close-btn {
             color: white;
-            font-size: 40px;
+            font-size: 35px;
             cursor: pointer;
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 30px;
+            right: 30px;
         }
 
         .side-nav a {
-            color: #cbd5e1;
+            color: #94a3b8;
             text-decoration: none;
-            padding: 12px 0;
+            padding: 18px 0;
+            font-size: 1.1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        .side-nav a:hover {
+            color: var(--accent-green);
+            padding-left: 10px;
         }
 
         .portal-link {
-            margin-top: 30px;
+            margin-top: auto;
             background: var(--accent-green);
             color: var(--primary-navy) !important;
             text-align: center;
             font-weight: 700;
             border-radius: 8px;
+            padding: 15px !important;
         }
 
-        /* FOOTER */
         .footer {
             text-align: center;
-            padding: 40px;
+            padding: 60px 20px;
+            background: var(--white);
             color: var(--text-slate);
             font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
         }
 
-        @media (max-width: 600px) {
-            .page-header h1 {
-                font-size: 2rem;
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 80px 5%;
             }
 
-            .services-grid {
-                grid-template-columns: 1fr;
+            .container {
+                margin-top: -30px;
             }
         }
     </style>
@@ -203,67 +236,72 @@
 <body>
 
     <header class="navbar">
-        <div class="brand-container">
-            <img src="./assets/image/logo.png" alt="Logo" class="logo-img">
-            <h1 class="brand-name">MESO<span>KURTIC</span></h1>
-        </div>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <a href="index.html" class="brand-container">
+            <img src="./assets/image/logo.png" alt="Mesokurtic Logo" class="logo-img">
+            <div class="brand-name">MESO<span>KURTIC</span></div>
+        </a>
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="Open Menu">☰</button>
     </header>
 
     <nav class="side-nav" id="sideNav">
-        <span class="close-btn" onclick="toggleMenu()">×</span>
+        <span class="close-btn" onclick="toggleMenu()">&times;</span>
         <a href="index.html">Home</a>
         <a href="about.html">About Us</a>
-        <a href="services.html">Services</a>
+        <a href="services.html" style="color: var(--accent-green);">Services</a>
         <a href="career.html">Careers</a>
-        <a href="dashboard.html">Dashboard</a>
+        <a href="dashboard.html">Admin Dashboard</a>
         <a href="login.html" class="portal-link">Portal Login</a>
     </nav>
 
     <header class="page-header">
         <h1>OUR SERVICES</h1>
-        <p>Integrated logistics and supply chain solutions designed for operational efficiency, visibility, and
-            controlled distribution across Nigeria.</p>
+        <p>Integrated logistics and supply chain solutions engineered for operational determinism and real-time
+            distribution across the continent.</p>
     </header>
 
     <main class="container">
         <div class="services-grid">
 
             <div class="service-card">
+                <div class="icon-box">🚚</div>
                 <h2>Haulage & Transportation</h2>
-                <p>Reliable fleet management and cargo transportation services ensuring safe and timely delivery of
-                    goods across regional and national routes.</p>
+                <p>High-integrity fleet management ensuring safe, deterministic delivery of cargo across regional and
+                    national routes with zero-loss protocols.</p>
             </div>
 
             <div class="service-card">
+                <div class="icon-box">📦</div>
                 <h2>Warehousing & Inventory</h2>
-                <p>Structured warehouse systems with real-time inventory tracking, stock control, and optimized storage
-                    solutions for business efficiency.</p>
+                <p>Structured storage utilizing transactional state-tracking to maintain real-time inventory precision
+                    and optimized stock control.</p>
             </div>
 
             <div class="service-card">
+                <div class="icon-box">🔗</div>
                 <h2>Supply Chain Distribution</h2>
-                <p>End-to-end distribution management from manufacturers to final destinations with full visibility and
-                    controlled logistics flow.</p>
+                <p>End-to-end management from point of manufacture to final destination, optimized for transparency and
+                    throughput efficiency.</p>
             </div>
 
             <div class="service-card">
+                <div class="icon-box">🛰️</div>
                 <h2>Fleet Operations Control</h2>
-                <p>Centralized monitoring and coordination of fleet activities including dispatching, routing, and
-                    delivery tracking.</p>
+                <p>Centralized monitoring utilizing edge-telemetry for coordination of dispatching, routing, and
+                    real-time asset tracking.</p>
             </div>
 
             <div class="service-card">
+                <div class="icon-box">📊</div>
                 <h2>Logistics Intelligence</h2>
-                <p>Data-driven insights and reporting systems to improve operational efficiency, reduce cost, and
-                    enhance supply chain decision-making.</p>
+                <p>Transforming physical movement into digital data. Leveraging analytics to reduce operational friction
+                    and maximize supply chain uptime.</p>
             </div>
 
         </div>
     </main>
 
     <footer class="footer">
-        <p>&copy; 2026 Mesokurtic Supply Chain Limited. All Rights Reserved.</p>
+        <p>&copy; 2026 Mesokurtic Supply Chain Limited. Engineered for Performance.</p>
     </footer>
 
     <script>
@@ -271,11 +309,11 @@
             document.getElementById('sideNav').classList.toggle('active');
         }
 
-        // Close on outside click
+        // Defensive close on outside click
         document.addEventListener('click', (e) => {
             const nav = document.getElementById('sideNav');
             const btn = document.querySelector('.menu-btn');
-            if (!nav.contains(e.target) && !btn.contains(e.target) && nav.classList.contains('active')) {
+            if (nav.classList.contains('active') && !nav.contains(e.target) && !btn.contains(e.target)) {
                 nav.classList.remove('active');
             }
         });

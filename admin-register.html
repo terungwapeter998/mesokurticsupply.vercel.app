@@ -4,239 +4,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Setup | Mesokurtic Supply Chain</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap"
+    <title>Mesokurtic - Fleet Administration</title>
+
+    <script type="module">
+        const session = JSON.parse(localStorage.getItem('mesokurtic_auth'));
+        // Strict deterministic check: Admin email required
+        if (!session || !session.email.endsWith('@company.com')) {
+            window.location.replace('index.html');
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@800&display=swap"
         rel="stylesheet">
 
     <style>
         :root {
-            --navy: #0f172a;
-            --green: #22c55e;
-            --slate-text: #64748b;
+            --primary-navy: #0f172a;
+            --accent-green: #22c55e;
             --white: #ffffff;
-            --error-red: #ef4444;
-            --bg-gradient: radial-gradient(circle at top left, #1e293b, #0f172a);
+            --text-slate: #475569;
+            --overlay: rgba(15, 23, 42, 0.8);
+            --bg-light: #f1f5f9;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background: var(--bg-gradient);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--primary-navy);
+            line-height: 1.6;
         }
 
-        /* --- MINIMAL TOPBAR --- */
-        .topbar {
-            padding: 20px 5%;
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: var(--white);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--primary-navy);
+        }
+
+        .brand-name span {
+            color: var(--accent-green);
+        }
+
+        .page-header {
+            background: linear-gradient(var(--overlay), var(--overlay));
+            padding: 60px 5%;
+            color: white;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: -40px auto 50px;
+            padding: 0 20px;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-green);
+            padding-left: 15px;
+            text-transform: uppercase;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 15px;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 1rem;
+        }
+
+        .btn-add {
+            background: var(--primary-navy);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-add:hover {
+            background: var(--accent-green);
+            color: var(--primary-navy);
+        }
+
+        .fleet-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            margin-bottom: 12px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .brand {
-            font-family: 'Montserrat', sans-serif;
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
             font-weight: 800;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .brand span {
-            color: var(--green);
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
         }
 
-        .context-tag {
-            font-size: 0.7rem;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        /* --- AUTH CARD --- */
-        .auth-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .auth-card {
-            background: var(--white);
-            color: var(--navy);
-            width: 100%;
-            max-width: 450px;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .auth-card h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .auth-card p {
-            font-size: 0.85rem;
-            color: var(--slate-text);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        /* --- FORM ELEMENTS --- */
-        form label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            color: var(--navy);
-            letter-spacing: 0.5px;
-        }
-
-        form input,
-        form select {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            background: #f8fafc;
-            font-size: 0.95rem;
-            transition: 0.2s;
-        }
-
-        form input:focus {
-            outline: none;
-            border-color: var(--green);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: var(--navy);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-
-        .btn-primary:hover {
-            background: #1e293b;
-            transform: translateY(-1px);
-        }
-
-        /* --- SYSTEM WARNINGS --- */
-        .auth-warning {
-            margin-top: 25px;
-            padding: 15px;
-            background: #fff1f2;
-            border-left: 4px solid var(--error-red);
-            border-radius: 4px;
-        }
-
-        .auth-warning p {
+        .status-maintenance {
+            background: #fee2e2;
             color: #991b1b;
-            font-size: 0.75rem;
-            text-align: left;
-            margin: 0;
-            font-weight: 500;
         }
 
-        .security-badge {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.7rem;
-            color: var(--slate-text);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+        .status-inactive {
+            background: #f1f5f9;
+            color: #475569;
         }
 
-        .footer {
-            padding: 20px;
-            text-align: center;
-            font-size: 0.75rem;
-            opacity: 0.6;
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <header class="topbar">
-        <div class="brand">
-            MESO<span>KURTIC</span> <span class="context-tag">ADMIN SETUP</span>
+    <nav class="navbar">
+        <a href="index.html" class="brand-name">MESO<span>KURTIC</span></a>
+        <div style="display: flex; gap: 20px;">
+            <a href="menu.html" style="text-decoration:none; font-weight:600; color:var(--primary-navy)">Menu</a>
+            <div style="font-weight: 600; color: var(--accent-green);">Operations Portal</div>
         </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Fleet Administration</h1>
     </header>
 
-    <main class="auth-container">
-        <section class="auth-card">
-            <h1>Initial Account Setup</h1>
-            <p>Establish the master administrator credentials for the supply chain platform.</p>
-
-            <form id="admin-register-form">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" placeholder="Legal Name" required>
-
-                <label for="email">Admin Email</label>
-                <input type="email" id="email" name="email" placeholder="admin@mesokurtic.com" required
-                    autocomplete="username">
-
-                <label for="password">Create Password</label>
-                <input type="password" id="password" name="password" placeholder="••••••••" required
-                    autocomplete="new-password">
-
-                <label for="role">System Role</label>
-                <select id="role" name="role" required>
-                    <option value="admin">Super Administrator</option>
+    <div class="container">
+        <div class="section-card">
+            <h2 class="section-title">Register New Vehicle</h2>
+            <div class="form-grid">
+                <input type="text" id="truckIdInput" placeholder="Truck ID (e.g. TRK-009)">
+                <select id="statusInput">
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="MAINTENANCE">MAINTENANCE</option>
+                    <option value="INACTIVE">INACTIVE</option>
                 </select>
-
-                <button type="submit" class="btn-primary">
-                    Initialize System
-                </button>
-            </form>
-
-            <div class="auth-warning">
-                <p><strong>SECURITY NOTICE:</strong> This bootstrap portal is currently active. Ensure this file is
-                    purged from the production server once the master account is initialized.</p>
+                <button class="btn-add" id="saveBtn">Save Vehicle</button>
             </div>
+        </div>
 
-            <div class="security-badge">
-                <span>🛡️</span> 256-bit SSL Encrypted Environment
-            </div>
-        </section>
-    </main>
+        <div class="section-card">
+            <h2 class="section-title">Live Fleet Inventory</h2>
+            <div id="fleet-list"></div>
+        </div>
+    </div>
 
-    <footer class="footer">
-        <p>&copy; 2026 Mesokurtic Supply Chain Limited. Internal Deployment v1.0.4</p>
-    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    <script>
-        // Form handling logic would go here
-        document.getElementById('admin-register-form').addEventListener('submit', function (e) {
-            // Your Firebase / Auth logic
-            console.log("Initializing Admin...");
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "mesokurtic-live.firebaseapp.com",
+            projectId: "mesokurtic-live",
+            storageBucket: "mesokurtic-live.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const fleetRef = collection(db, "fleet");
+
+        // UI DOM ELEMENTS
+        const listArea = document.getElementById("fleet-list");
+        const saveBtn = document.getElementById('saveBtn');
+        const truckInput = document.getElementById('truckIdInput');
+        const statusInput = document.getElementById('statusInput');
+
+        // REPOSITORY PATTERN: Deterministic Save
+        saveBtn.addEventListener('click', async () => {
+            const truckId = truckInput.value.trim().toUpperCase();
+            const status = statusInput.value;
+
+            if (!truckId) return alert("System Invariant: Truck ID required.");
+
+            saveBtn.disabled = true; // State lock
+            try {
+                await addDoc(fleetRef, {
+                    truckId,
+                    status,
+                    createdAt: serverTimestamp()
+                });
+                truckInput.value = "";
+            } catch (error) {
+                console.error("Ledger Write Error:", error);
+            } finally {
+                saveBtn.disabled = false;
+            }
+        });
+
+        // VIEW ADAPTER: Deterministic Rendering (No innerHTML += leaks)
+        onSnapshot(fleetRef, (snapshot) => {
+            listArea.textContent = ""; // Clear state safely
+
+            if (snapshot.empty) {
+                const emptyMsg = document.createElement('p');
+                emptyMsg.style.textAlign = "center";
+                emptyMsg.textContent = "No vehicles currently registered.";
+                listArea.appendChild(emptyMsg);
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const card = document.createElement('div');
+                card.className = 'fleet-card';
+
+                // Deterministic Node Creation (Anti-XSS)
+                card.innerHTML = `
+                    <div>
+                        <small style="color: #94a3b8; font-size: 0.7rem;">UID: ${doc.id.substring(0, 8)}</small>
+                        <h3 style="color: var(--primary-navy); margin-top: 4px;">${data.truckId}</h3>
+                    </div>
+                    <span class="status-badge status-${data.status.toLowerCase()}">${data.status}</span>
+                `;
+                listArea.appendChild(card);
+            });
         });
     </script>
 </body>

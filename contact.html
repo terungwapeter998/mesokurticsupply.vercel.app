@@ -31,7 +31,7 @@
             line-height: 1.6;
         }
 
-        /* --- NAVIGATION (Master Consistent) --- */
+        /* --- NAVIGATION --- */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -51,6 +51,8 @@
             text-transform: uppercase;
             text-decoration: none;
             color: var(--navy);
+            display: flex;
+            align-items: center;
         }
 
         .brand-name span {
@@ -58,10 +60,9 @@
         }
 
         .logo-img {
-            height: 50px;
+            height: 40px;
             width: auto;
-            vertical-align: middle;
-            margin-right: 10px;
+            margin-right: 12px;
         }
 
         .menu-btn {
@@ -69,37 +70,39 @@
             cursor: pointer;
             border: none;
             background: none;
+            color: var(--navy);
         }
 
         /* --- HERO --- */
         .hero {
             background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)),
-                url('./assets/image/hero-bg.png') center/cover;
-            padding: 100px 5%;
+                url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1500') center/cover;
+            padding: 80px 5%;
             color: white;
             text-align: center;
         }
 
         .hero h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         /* --- CONTACT SECTION --- */
         .container {
             max-width: 1200px;
-            margin: -50px auto 80px;
+            margin: -40px auto 80px;
             padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 1.5fr;
-            gap: 40px;
+            gap: 30px;
         }
 
         .info-panel,
         .form-panel {
             background: var(--white);
-            padding: 50px;
+            padding: 40px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
@@ -111,21 +114,21 @@
 
         .info-panel h2 {
             font-family: 'Montserrat', sans-serif;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border-bottom: 3px solid var(--green);
             display: inline-block;
             padding-bottom: 5px;
         }
 
         .contact-method {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .contact-method strong {
             display: block;
             color: var(--green);
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
@@ -133,21 +136,15 @@
         .contact-method a {
             color: white;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            transition: color 0.3s;
         }
 
-        .contact-method p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .contact-method a:hover {
+            color: var(--green);
         }
 
-        /* --- FORM STYLING --- */
-        .form-panel h2 {
-            font-family: 'Montserrat', sans-serif;
-            margin-bottom: 30px;
-            color: var(--navy);
-        }
-
+        /* --- FORM --- */
         .form-group {
             margin-bottom: 20px;
         }
@@ -162,39 +159,30 @@
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             background: #f1f5f9;
             font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--green);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
         }
 
         .submit-btn {
             background: var(--green);
             color: var(--navy);
             width: 100%;
-            padding: 18px;
+            padding: 15px;
             border: none;
             border-radius: 8px;
             font-weight: 800;
-            font-size: 1rem;
             cursor: pointer;
             text-transform: uppercase;
             transition: 0.3s;
         }
 
-        .submit-btn:hover {
-            background: #1cb054;
-            transform: translateY(-2px);
+        .submit-btn:disabled {
+            background: var(--slate);
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         /* --- SIDE NAV --- */
@@ -237,10 +225,6 @@
                 grid-template-columns: 1fr;
                 margin-top: 20px;
             }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
@@ -274,17 +258,14 @@
     <main class="container">
         <section class="info-panel">
             <h2>Contact Info</h2>
-
             <div class="contact-method">
                 <strong>Email Address</strong>
                 <a href="mailto:Mesokurticsupplychainltd@yahoo.com">Mesokurticsupplychainltd@yahoo.com</a>
             </div>
-
             <div class="contact-method">
                 <strong>Phone Line</strong>
                 <a href="tel:+2347036570554">+234 703 657 0554</a>
             </div>
-
             <div class="contact-method">
                 <strong>Headquarters</strong>
                 <p>House 9 Salau Street, Desa Community, Ibeju-Lekki, Lagos, Nigeria.</p>
@@ -293,24 +274,21 @@
 
         <section class="form-panel">
             <h2>Send a Message</h2>
-            <form>
+            <form id="contactForm" action="https://formspree.io/f/maqadgbg" method="POST">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" placeholder="e.g. Samuel Ademeso" required>
+                    <input type="text" name="name" placeholder="e.g. Samuel Ademeso" required>
                 </div>
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" placeholder="name@company.com" required>
-                </div>
-                <div class="form-group">
-                    <label>Subject</label>
-                    <input type="text" placeholder="How can we help?">
+                    <input type="email" name="email" placeholder="name@company.com" required>
                 </div>
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea rows="5" placeholder="Detail your inquiry here..." required></textarea>
+                    <textarea name="message" rows="5" placeholder="Detail your inquiry here..." required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Send Message</button>
+                <button type="submit" id="submitBtn" class="submit-btn">Send Message</button>
+                <p id="status" style="margin-top: 15px; font-size: 0.9rem; font-weight: bold; text-align: center;"></p>
             </form>
         </section>
     </main>
@@ -323,6 +301,49 @@
         function toggleMenu() {
             document.getElementById('sideNav').classList.toggle('active');
         }
+
+        const form = document.getElementById("contactForm");
+        const status = document.getElementById("status");
+        const btn = document.getElementById("submitBtn");
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+            status.innerHTML = "";
+
+            fetch(event.target.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    status.innerHTML = "✓ Success! Your message has been sent.";
+                    status.style.color = "var(--green)";
+                    form.reset();
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                        } else {
+                            status.innerHTML = "Error: Submission failed.";
+                        }
+                        status.style.color = "#ef4444";
+                    })
+                }
+            }).catch(error => {
+                status.innerHTML = "Error: Please check your internet connection.";
+                status.style.color = "#ef4444";
+            }).finally(() => {
+                btn.disabled = false;
+                btn.innerText = "Send Message";
+            });
+        }
+        form.addEventListener("submit", handleSubmit);
     </script>
 </body>
 

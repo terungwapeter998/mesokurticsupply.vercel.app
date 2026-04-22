@@ -1,20 +1,27 @@
-<!--  -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operations | Mesokurtic Supply Chain</title>
+    <title>Intelligence & Analytics | Mesokurtic</title>
+
+    <script type="module">
+        const isAdmin = localStorage.getItem('mesokurtic_admin_session') === 'true';
+        if (!isAdmin) {
+            window.location.replace('login.html');
+        }
+    </script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
     <style>
         :root {
             --primary-navy: #0f172a;
             --accent-green: #22c55e;
-            --sidebar-width: 280px;
             --bg-body: #f8fafc;
             --white: #ffffff;
             --border: #e2e8f0;
@@ -29,27 +36,38 @@
 
         body {
             background-color: var(--bg-body);
-            display: flex;
-            min-height: 100vh;
+            color: var(--primary-navy);
         }
 
-        /* --- SIDEBAR --- */
-        .side-nav {
-            width: var(--sidebar-width);
-            background: var(--primary-navy);
-            color: white;
-            padding: 30px 20px;
-            position: fixed;
-            height: 100vh;
+        /* --- Design Integrity: Navbar --- */
+        .navbar {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: var(--white);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 40px;
         }
 
         .brand-name {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
             font-size: 1.2rem;
-            margin-bottom: 40px;
+            color: var(--primary-navy);
             text-transform: uppercase;
         }
 
@@ -57,128 +75,136 @@
             color: var(--accent-green);
         }
 
-        .side-nav a {
-            color: #cbd5e1;
+        .menu-btn {
+            font-size: 32px;
+            cursor: pointer;
+            border: none;
+            background: none;
             text-decoration: none;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-            display: block;
-            font-size: 0.95rem;
-            transition: 0.2s;
+            color: var(--primary-navy);
         }
 
-        .side-nav a:hover,
-        .side-nav a.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--accent-green);
-        }
-
-        /* --- MAIN CONTENT --- */
         .main-wrapper {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 5%;
         }
 
         .page-title {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.8rem;
-            margin-bottom: 30px;
-            color: var(--primary-navy);
+            margin-bottom: 24px;
         }
 
-        /* --- OPERATIONS GRID --- */
-        .ops-grid {
+        /* KPI Layout */
+        .kpi-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .kpi-card.blue {
+            border-left-color: #3b82f6;
+        }
+
+        .kpi-card.amber {
+            border-left-color: #f59e0b;
+        }
+
+        .kpi-card.red {
+            border-left-color: #ef4444;
+        }
+
+        .kpi-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        /* Analytics Grid */
+        .charts-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            /* Map takes more space */
-            gap: 25px;
+            gap: 24px;
+            margin-bottom: 24px;
         }
 
         .panel {
             background: var(--white);
             border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
             border: 1px solid var(--border);
         }
 
-        .panel h2 {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
+        .track-tool {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
         }
 
-        /* MOCK MAP AREA */
-        .map-placeholder {
-            width: 100%;
-            height: 450px;
-            background: #e5e7eb url('https://via.placeholder.com/800x450?text=Live+GPS+Fleet+Map+Display') center/cover;
+        .track-tool input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border);
             border-radius: 8px;
-            border: 1px solid var(--border);
         }
 
-        /* DISPATCH LIST */
-        .dispatch-list {
-            list-style: none;
-        }
-
-        .dispatch-item {
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .dispatch-item:last-child {
-            border-bottom: none;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-
-        .item-sub {
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-
-        .badge {
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-        }
-
-        .badge-ready {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge-pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        /* BUTTONS */
-        .btn-primary {
+        .btn-track {
             background: var(--primary-navy);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 0 20px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
         }
 
-        @media (max-width: 1100px) {
-            .ops-grid {
+        .routes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .routes-table th {
+            padding: 10px 12px;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 0.8rem;
+            text-align: left;
+        }
+
+        .routes-table td {
+            padding: 11px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.875rem;
+        }
+
+        .bar-bg {
+            background: #f1f5f9;
+            border-radius: 4px;
+            height: 6px;
+            width: 100%;
+        }
+
+        .bar-fill {
+            background: var(--accent-green);
+            border-radius: 4px;
+            height: 6px;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 900px) {
+            .charts-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -187,65 +213,150 @@
 
 <body>
 
-    <aside class="side-nav">
-        <div class="brand-name">MESO<span>KURTIC</span></div>
-
-        <p style="color: #64748b; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin: 20px 0 10px;">
-            Platform</p>
-        <a href="dashboard.html">📊 Dashboard</a>
-        <a href="operations.html" class="active">🚚 Operations</a>
-        <a href="analytics.html">📈 Analytics</a>
-        <a href="career.html">Careers</a>
-
-        <p style="color: #64748b; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin: 20px 0 10px;">
-            Support</p>
-        <a href="index.html">🏠 Public Home</a>
-        <a href="#">⚙️ Settings</a>
-    </aside>
+    <header class="navbar">
+        <a href="index.html" class="brand-container">
+            <img src="assets/image/logo.png" alt="M" class="logo-img">
+            <h1 class="brand-name">MESO<span>KURTIC</span></h1>
+        </a>
+        <a href="menu.html" class="menu-btn">☰</a>
+    </header>
 
     <div class="main-wrapper">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h1 class="page-title">Fleet Operations</h1>
-            <button class="btn-primary">+ New Dispatch</button>
+        <h1 class="page-title">Intelligence & Analytics</h1>
+
+        <div class="panel" style="margin-bottom: 28px;">
+            <h2>Internal Asset Locator</h2>
+            <div class="track-tool">
+                <input type="text" id="internalTrackInput" placeholder="Enter Truck ID (e.g. TRK-001)">
+                <button class="btn-track" id="internalTrackBtn">Locate Asset</button>
+            </div>
+            <div id="internalTrackResult"></div>
         </div>
 
-        <div class="ops-grid">
-            <section class="panel">
-                <h2>Live Fleet Tracking <span style="font-size: 0.8rem; font-weight: 400; color: var(--accent-green);">●
-                        Live Feed</span></h2>
-                <div class="map-placeholder">
-                </div>
-            </section>
+        <div class="kpi-strip">
+            <div class="kpi-card">
+                <h3>Shipments</h3>
+                <div class="kpi-value" id="kpi-total">0</div>
+            </div>
+            <div class="kpi-card blue">
+                <h3>On-Time</h3>
+                <div class="kpi-value" id="kpi-ontime">0%</div>
+            </div>
+            <div class="kpi-card amber">
+                <h3>Avg Tonnage</h3>
+                <div class="kpi-value" id="kpi-tons">0</div>
+            </div>
+            <div class="kpi-card red">
+                <h3>Delays</h3>
+                <div class="kpi-value" id="kpi-delay">0%</div>
+            </div>
+        </div>
 
+        <div class="charts-grid">
             <section class="panel">
-                <h2>Dispatch Queue</h2>
-                <ul class="dispatch-list">
-                    <li class="dispatch-item">
-                        <div class="item-header">
-                            <span>Order #8842</span>
-                            <span class="badge badge-ready">Ready</span>
-                        </div>
-                        <div class="item-sub">Route: Lagos → Ibadan | 12.5 Tons</div>
-                    </li>
-                    <li class="dispatch-item">
-                        <div class="item-header">
-                            <span>Order #8845</span>
-                            <span class="badge badge-pending">Assigning</span>
-                        </div>
-                        <div class="item-sub">Route: Kano → Abuja | 8.0 Tons</div>
-                    </li>
-                    <li class="dispatch-item">
-                        <div class="item-header">
-                            <span>Order #8849</span>
-                            <span class="badge badge-pending">In Review</span>
-                        </div>
-                        <div class="item-sub">Route: Port Harcourt → Onitsha | 15.0 Tons</div>
-                    </li>
-                </ul>
+                <h2>Volume Trend <span style="color: var(--accent-green); font-size: 0.7rem;">● Live</span></h2>
+                <canvas id="chart-timeline"></canvas>
+            </section>
+            <section class="panel">
+                <h2>Status Distribution</h2>
+                <canvas id="chart-status"></canvas>
+            </section>
+            <section class="panel" style="grid-column: 1 / -1;">
+                <h2>Top Logistics Corridors</h2>
+                <table class="routes-table">
+                    <thead>
+                        <tr>
+                            <th>Route</th>
+                            <th>Count</th>
+                            <th>Avg Weight</th>
+                            <th>Share</th>
+                        </tr>
+                    </thead>
+                    <tbody id="routes-tbody">
+                        <tr>
+                            <td colspan="4" style="text-align:center; color:#94a3b8;">Syncing streams...</td>
+                        </tr>
+                    </tbody>
+                </table>
             </section>
         </div>
     </div>
 
-</body>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-</html>
+        const firebaseConfig = { /* USE YOUR CONFIG */ };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- CHART ENGINES ---
+        const commonOptions = { responsive: true, maintainAspectRatio: false };
+
+        const timelineChart = new Chart(document.getElementById('chart-timeline'), {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'Shipments', data: [], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.1)', fill: true, tension: 0.4 }] },
+            options: commonOptions
+        });
+
+        const statusChart = new Chart(document.getElementById('chart-status'), {
+            type: 'doughnut',
+            data: { labels: ['Active', 'Delivered', 'Delayed', 'Pending'], datasets: [{ data: [0, 0, 0, 0], backgroundColor: ['#3b82f6', '#22c55e', '#ef4444', '#f59e0b'] }] },
+            options: { ...commonOptions, cutout: '70%' }
+        });
+
+        // --- DATA ADAPTERS ---
+        onSnapshot(query(collection(db, 'shipments'), orderBy('createdAt', 'asc')), (snapshot) => {
+            const data = snapshot.docs.map(d => d.data());
+
+            // 1. KPI Calculations
+            const total = data.length;
+            const delivered = data.filter(d => d.status === 'Delivered').length;
+            const delayed = data.filter(d => d.status === 'Delayed').length;
+            const totalTons = data.reduce((s, d) => s + (Number(d.tons) || 0), 0);
+
+            document.getElementById('kpi-total').textContent = total;
+            document.getElementById('kpi-ontime').textContent = total ? ((delivered / total) * 100).toFixed(0) + '%' : '0%';
+            document.getElementById('kpi-tons').textContent = total ? (totalTons / total).toFixed(1) : '0';
+            document.getElementById('kpi-delay').textContent = total ? ((delayed / total) * 100).toFixed(0) + '%' : '0%';
+
+            // 2. Chart Update (Optimized)
+            statusChart.data.datasets[0].data = [
+                data.filter(d => d.status === 'In Transit').length,
+                delivered, delayed,
+                data.filter(d => d.status === 'Pending').length
+            ];
+            statusChart.update();
+
+            // 3. Corridor Analytics
+            const corridorMap = {};
+            data.forEach(d => {
+                const key = `${d.origin} → ${d.destination}`;
+                if (!corridorMap[key]) corridorMap[key] = { count: 0, tons: 0 };
+                corridorMap[key].count++;
+                corridorMap[key].tons += (Number(d.tons) || 0);
+            });
+
+            const sorted = Object.entries(corridorMap).sort((a, b) => b[1].count - a[1].count).slice(0, 5);
+            const max = sorted[0]?.[1].count || 1;
+
+            document.getElementById('routes-tbody').innerHTML = sorted.map(([name, stats]) => `
+                <tr>
+                    <td><b>${name}</b></td>
+                    <td>${stats.count}</td>
+                    <td>${(stats.tons / stats.count).toFixed(1)} T</td>
+                    <td><div class="bar-bg"><div class="bar-fill" style="width:${(stats.count / max) * 100}%"></div></div></td>
+                </tr>
+            `).join('');
+        });
+
+        // --- ASSET LOCATOR ---
+        document.getElementById('internalTrackBtn').addEventListener('click', async () => {
+            const id = document.getElementById('internalTrackInput').value.trim().toUpperCase();
+            const res = document.getElementById('internalTrackResult');
+            if (!id) return;
+
+            const snap = await getDocs(query(collection(db, 'fleet'), where("truckId", "==", id)));
+
+            if (snap.empty) {
+                res.innerHTML = `<p style="color:#ef4444; margin-top:10px;">Asset ID ${

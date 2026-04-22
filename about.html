@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Mesokurtic Supply Chain Limited</title>
+    <title>About Us | Mesokurtic Supply Chain</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
 
     <style>
@@ -15,9 +15,8 @@
             --accent-green: #22c55e;
             --white: #ffffff;
             --text-slate: #475569;
-            --overlay: rgba(15, 23, 42, 0.85);
             --bg-light: #f8fafc;
-            --border-color: #e2e8f0;
+            --overlay: rgba(15, 23, 42, 0.85);
         }
 
         * {
@@ -30,7 +29,7 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-light);
             color: var(--primary-navy);
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         /* --- NAVIGATION --- */
@@ -40,7 +39,7 @@
             align-items: center;
             padding: 15px 5%;
             background: var(--white);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -54,14 +53,13 @@
         }
 
         .logo-img {
-            height: 50px;
-            width: auto;
+            height: 45px;
         }
 
         .brand-name {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--primary-navy);
             text-transform: uppercase;
         }
@@ -70,136 +68,132 @@
             color: var(--accent-green);
         }
 
-        .menu-btn {
-            font-size: 32px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: var(--primary-navy);
-        }
-
         /* --- HERO --- */
         .page-header {
             background: linear-gradient(var(--overlay), var(--overlay)), url('assets/image/hero-bg.png');
             background-size: cover;
             background-position: center;
-            padding: 100px 5% 140px;
+            padding: 100px 5%;
             color: white;
             text-align: center;
         }
 
         .page-header h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
+        /* --- CORE CONTENT --- */
         .container {
             max-width: 1100px;
-            margin: -80px auto 80px;
+            margin: -50px auto 80px;
             padding: 0 20px;
+            position: relative;
+            z-index: 10;
         }
 
-        /* --- DIRECTOR CARDS --- */
-        .section-tag {
-            color: var(--accent-green);
-            text-transform: uppercase;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            display: block;
-            margin-bottom: 15px;
-        }
-
-        .management-title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .director-card {
+        .white-card {
             background: var(--white);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: flex-start;
-            gap: 40px;
-            border: 1px solid var(--border-color);
-        }
-
-        .director-img {
-            width: 300px;
-            height: 400px;
-            object-fit: cover;
+            padding: 50px;
             border-radius: 12px;
-            background-color: #e2e8f0;
-            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
         }
 
-        .director-text h2 {
+        h2.section-title {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.8rem;
-            color: var(--primary-navy);
-            margin-bottom: 5px;
-        }
-
-        .director-role {
-            display: block;
-            color: var(--accent-green);
-            font-weight: 600;
             margin-bottom: 25px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border-left: 5px solid var(--accent-green);
+            padding-left: 20px;
         }
 
-        .bio-section {
-            margin-bottom: 20px;
-        }
-
-        .bio-section h4 {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            color: var(--primary-navy);
-            margin-bottom: 8px;
-            font-weight: 700;
-            opacity: 0.8;
-        }
-
-        .bio-section p {
-            color: var(--text-slate);
-            font-size: 0.95rem;
-            margin-bottom: 6px;
-        }
-
-        /* --- IDENTITY SECTIONS --- */
-        .identity-section {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 50px;
-            margin-bottom: 50px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        }
-
-        .identity-grid {
+        /* --- LEADERSHIP PROFILES --- */
+        .director-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
             gap: 40px;
             margin-top: 30px;
         }
 
-        .identity-item h3 {
-            font-size: 1.1rem;
+        .director-profile {
+            display: flex;
+            gap: 30px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .director-profile:last-child {
+            border-bottom: none;
+        }
+
+        .director-img {
+            width: 220px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .director-info h3 {
+            font-family: 'Montserrat', sans-serif;
             margin-bottom: 15px;
             color: var(--primary-navy);
+        }
+
+        .director-info p {
+            font-size: 0.95rem;
+            color: var(--text-slate);
+            margin-bottom: 12px;
+        }
+
+        /* --- IDENTITY & VISION --- */
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .vision-item {
+            background: #f1f5f9;
+            padding: 30px;
+            border-radius: 8px;
             border-left: 4px solid var(--accent-green);
-            padding-left: 15px;
+        }
+
+        .vision-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--primary-navy);
             text-transform: uppercase;
         }
 
-        /* --- SIDEBAR --- */
+        /* --- VALUES LIST --- */
+        .values-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .value-box {
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .value-box strong {
+            color: var(--accent-green);
+            font-family: 'Montserrat', sans-serif;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        /* SIDE NAVIGATION */
         .side-nav {
             position: fixed;
             top: 0;
@@ -207,34 +201,35 @@
             width: 300px;
             height: 100%;
             background: var(--primary-navy);
-            transition: 0.4s ease;
+            transition: 0.4s;
             padding: 60px 30px;
-            z-index: 1001;
-            display: flex;
-            flex-direction: column;
+            z-index: 1500;
         }
 
         .side-nav.active {
             right: 0;
         }
 
-        .close-btn {
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            position: absolute;
-            top: 20px;
-            right: 20px;
+        .side-nav a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        @media (max-width: 900px) {
-            .director-card {
+        @media (max-width: 768px) {
+            .director-profile {
                 flex-direction: column;
             }
 
             .director-img {
                 width: 100%;
-                height: auto;
+                height: 350px;
+            }
+
+            .values-list {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -244,167 +239,140 @@
 
     <header class="navbar">
         <a href="index.html" class="brand-container">
-            <img src="assets/image/logo.png" alt="Mesokurtic Logo" class="logo-img">
+            <img src="assets/image/logo.png" alt="Logo" class="logo-img">
             <h1 class="brand-name">MESO<span>KURTIC</span></h1>
         </a>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <button style="background:none; border:none; font-size:28px; cursor:pointer;" onclick="toggleMenu()">☰</button>
     </header>
 
     <nav class="side-nav" id="sideNav">
-        <span class="close-btn" onclick="toggleMenu()">×</span>
-        <a href="index.html" style="color: white; text-decoration: none; margin-bottom: 20px;">Home</a>
-        <a href="about.html" style="color: white; text-decoration: none; margin-bottom: 20px;">About Us</a>
+        <span style="color:white; font-size:35px; cursor:pointer;" onclick="toggleMenu()">×</span>
+        <a href="index.html">Home</a>
+        <a href="about.html" style="color:var(--accent-green)">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="career.html">Careers</a>
+        <a href="login.html"
+            style="margin-top:20px; background:var(--accent-green); color:var(--primary-navy); text-align:center; border-radius:5px;">Portal
+            Login</a>
     </nav>
 
     <header class="page-header">
-        <span class="section-tag" style="color: white; opacity: 0.8;">Leadership and Management</span>
-        <h1>MEET OUR DIRECTORS</h1>
-        <p>Driving Excellence in Supply Chain Logistics</p>
+        <h1>ABOUT US</h1>
     </header>
 
     <main class="container">
 
-        <div class="management-title">
-            <span class="section-tag">Executive Board</span>
-            <h2>Directors and Management Profile</h2>
-        </div>
+        <section class="white-card">
+            <h2 class="section-title">Board of Directors & Management</h2>
+            <div class="director-grid">
 
-        <section class="director-card">
-            <img src="assets/image/director.jpg" alt="Mr. Ademeso Olakunle Samuel" class="director-img">
-            <div class="director-text">
-                <h2>Mr. Ademeso Olakunle Samuel</h2>
-                <span class="director-role">Managing Director and Chief Executive Officer</span>
+                <article class="director-profile">
+                    <img src="assets/image/director.jpg" alt="Mr. Ademeso Olakunle Samuel" class="director-img">
+                    <div class="director-info">
+                        <h3>Mr. Ademeso Olakunle Samuel</h3>
+                        <p><strong>Founder / Director</strong></p>
+                        <p>A graduate of Physics from Obafemi Awolowo University with an MBA in Procurement and Supply
+                            Chain Management from LAUTECH. Chartered member of CISCM and CIWMM.</p>
+                        <p>With experience spanning Guinness Nigeria and Dangote Petroleum Refinery, Mr. Samuel leads
+                            our strategic supply chain initiatives.</p>
+                    </div>
+                </article>
 
-                <div class="bio-section">
-                    <h4>Academic Background</h4>
-                    <p>Graduate of Physics from Obafemi Awolowo University, Ile-Ife.</p>
-                    <p>Master of Business Administration in Procurement and Supply Chain Management from Ladoke Akintola
-                        University of Science and Technology.</p>
-                </div>
+                <article class="director-profile">
+                    <img src="assets/image/director2.jpg" alt="Mrs. Eneji Taiwo Abiola" class="director-img">
+                    <div class="director-info">
+                        <h3>Mrs. Eneji Taiwo Abiola</h3>
+                        <p><strong>Supply Chain Specialist</strong></p>
+                        <p>Seasoned professional with over a decade of experience across manufacturing. MBA candidate at
+                            Rome Business School and Category Manager at Livestock Feeds PLC.</p>
+                        <p>She specializes in cost optimization and procurement planning, ensuring Mesokurtic maintains
+                            a lean and efficient operational model.</p>
+                    </div>
+                </article>
 
-                <div class="bio-section">
-                    <h4>Professional Affiliations</h4>
-                    <p>Member of the Chartered Institute of Supply Chain Management.</p>
-                    <p>Member of the Chartered Institute of Warehousing and Materials Management.</p>
-                    <p>Diploma in Transport and Logistics Management from the College of Logistics and Supply Chain
-                        Management.</p>
-                </div>
+                <article class="director-profile">
+                    <img src="assets/image/director3.jpg" alt="Mr. Adebayo Olusoga David" class="director-img">
+                    <div class="director-info">
+                        <h3>Mr. Adebayo Olusoga David</h3>
+                        <p><strong>Operations Manager</strong></p>
+                        <p>Holds a Masters in Business Administration from Rome Business School with an extensive
+                            background in sales and travel retail operations.</p>
+                        <p>He oversees our operational growth, ensuring our logistics flow remains uninterrupted across
+                            the Nigerian retail landscape.</p>
+                    </div>
+                </article>
 
-                <div class="bio-section">
-                    <h4>Professional Career</h4>
-                    <p>Currently serves as Supply Chain Specialist at Dangote Petroleum Refinery and Petrochemicals.
-                        Previous experience includes roles at Guinness Nigeria Public Limited Company and Arowolo Oil
-                        and Gas.</p>
-                </div>
             </div>
         </section>
 
-        <section class="director-card">
-            <img src="assets/image/director2.jpg" alt="Mrs. Eneji Taiwo Abiola" class="director-img">
-            <div class="director-text">
-                <h2>Mrs. Eneji Taiwo Abiola</h2>
-                <span class="director-role">Executive Director</span>
+        <section class="white-card">
+            <h2 class="section-title">Corporate Identity</h2>
+            <p><strong>Mesokurtic Supply Chain Limited</strong> is a registered Nigerian private limited liability
+                company specializing in transport, warehousing, redistribution, inbound logistics, merchandising, and
+                supply chain consulting.</p>
 
-                <div class="bio-section">
-                    <h4>Academic Background</h4>
-                    <p>Bachelor of Business Administration from Lead City University, Ibadan.</p>
-                    <p>Currently pursuing a Master of Business Administration in Logistics and Supply Chain Management
-                        at Rome Business School.</p>
-                </div>
-
-                <div class="bio-section">
-                    <h4>Professional Affiliations</h4>
-                    <p>Chartered Member of the Chartered Institute of Supply Chain Management.</p>
-                    <p>Associate Member of the Chartered Institute of Warehousing and Materials Management.</p>
-                </div>
-
-                <div class="bio-section">
-                    <h4>Professional Experience</h4>
-                    <p>Currently Category Manager (Indirect) at Livestock Feeds Public Limited Company (a subsidiary of
-                        United Africa Company Nigeria Public Limited Company). Over a decade of experience in strategic
-                        sourcing and procurement planning.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="director-card">
-            <img src="assets/image/director3.jpg" alt="Mr. Adebayo Olusoga David" class="director-img">
-            <div class="director-text">
-                <h2>Mr. Adebayo Olusoga David</h2>
-                <span class="director-role">Director</span>
-
-                <div class="bio-section">
-                    <h4>Academic Background</h4>
-                    <p>Degree in Educational Management from Ekiti State University.</p>
-                    <p>Master of Business Administration from Rome Business School.</p>
-                </div>
-
-                <div class="bio-section">
-                    <h4>Professional Experience</h4>
-                    <p>Currently serves as the Retail Manager at Tourvest Travel Retail in Lagos, Nigeria. Specializes
-                        in leading operational growth and business development within the travel and tourism industry.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <hr style="margin-bottom: 60px; border: 0; border-top: 1px solid var(--border-color);">
-
-        <section class="identity-section">
-            <span class="section-tag">Corporate Profile</span>
-            <h2>Our Identity and Strategy</h2>
-            <p>MESOKURTIC SUPPLY CHAIN LIMITED is a registered Nigerian private limited liability company. The company
-                provides transport, warehousing, redistribution services, inbound logistics solutions, merchandising,
-                and supply chain consulting services.</p>
-
-            <div class="identity-grid">
-                <div class="identity-item">
+            <div class="vision-grid">
+                <div class="vision-item">
                     <h3>Our Vision</h3>
                     <p>We are the preferred reference of excellent supply chain service delivery in all our chosen
                         markets.</p>
                 </div>
-                <div class="identity-item">
-                    <h3>Our Mission</h3>
+                <div class="vision-item">
+                    <h3>Mission</h3>
                     <p>To provide cost-effective, befitting business solutions and be the vanguard in the provision of
                         these services, which will ensure that the very needs of our customers are continually met.</p>
                 </div>
-            </div>
-
-            <div class="identity-grid">
-                <div class="identity-item">
-                    <h3>Core Values</h3>
-                    <p>Team spirit, mutual respect, candour, initiative, integrity, competence, innovation, customer
-                        service, and a can-do spirit.</p>
-                </div>
-                <div class="identity-item">
-                    <h3>Quality Policy</h3>
-                    <p>To understand and surpass our clients’ needs and provide responsive and responsible high
-                        standards value adding solutions. Our trucks are fully tracked for On Time and In Full delivery.
-                    </p>
+                <div class="vision-item">
+                    <h3>Our Edge</h3>
+                    <p>We provide excellent product or service based on scope, cost and time without compromising
+                        quality.</p>
                 </div>
             </div>
         </section>
 
-        <section class="identity-section" style="background: var(--primary-navy); color: white;">
-            <span class="section-tag" style="color: var(--accent-green);">Fleet and Equipment</span>
-            <h2 style="color: white;">Market Position and Strategy</h2>
-            <p style="margin-bottom: 20px; opacity: 0.9;">We understand our client’s peak requirements and provide a
-                fleet of thirty-ton to forty-ton vehicles, including Box Body, Flatbeds, and Curtain-sided trucks.</p>
-            <p style="opacity: 0.9;">All services are delivered in strict compliance with industry Health, Safety, and
-                Environment guidelines and regulations to protect workers and equipment.</p>
+        <section class="white-card">
+            <h2 class="section-title">Our Core Values</h2>
+            <p style="margin-bottom: 25px; font-style: italic;">Our core values depicted by unbending flairs and
+                attributes are:</p>
+
+            <div class="values-list">
+                <div class="value-box">
+                    <strong>Integrity</strong>
+                    <p>Our foremost standard of conduct. Our word, our bond.</p>
+                </div>
+                <div class="value-box">
+                    <strong>Excellence</strong>
+                    <p>Nothing else satisfies but excellence; being the best at what we do.</p>
+                </div>
+                <div class="value-box">
+                    <strong>Innovation</strong>
+                    <p>Keeps us at the apex of development and strategy in all our chosen markets.</p>
+                </div>
+                <div class="value-box">
+                    <strong>Learning</strong>
+                    <p>At the centre of our heart is continuous learning.</p>
+                </div>
+                <div class="value-box">
+                    <strong>Diversity</strong>
+                    <p>We realize the value in actively recruiting, developing and mentoring talented individuals of
+                        diverse cultures and background.</p>
+                </div>
+                <div class="value-box">
+                    <strong>Citizenship</strong>
+                    <p>Our commitment to the communities in which we work and live.</p>
+                </div>
+            </div>
         </section>
 
     </main>
 
     <footer
-        style="text-align: center; padding: 40px; color: var(--text-slate); font-size: 0.85rem; border-top: 1px solid var(--border-color);">
-        <p>&copy; 2026 Mesokurtic Supply Chain Limited. All Rights Reserved.</p>
+        style="text-align: center; padding: 40px; color: var(--text-slate); border-top: 1px solid #e2e8f0; background: #fff;">
+        <p>&copy; 2026 Mesokurtic Supply Chain Limited. Professional. Reliable. Deterministic.</p>
     </footer>
 
     <script>
-        function toggleMenu() {
-            document.getElementById('sideNav').classList.toggle('active');
-        }
+        function toggleMenu() { document.getElementById('sideNav').classList.toggle('active'); }
     </script>
 </body>
 
