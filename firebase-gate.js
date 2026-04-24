@@ -11,13 +11,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCSU1Crbiy_pcJrGguhE0adYHltha2ZiEA",
-    authDomain: "mesokurtic-live.firebaseapp.com",
-    projectId: "mesokurtic-live",
-    storageBucket: "mesokurtic-live.firebasestorage.app",
-    messagingSenderId: "1000493696057",
-    appId: "1:1000493696057:web:e8a6e546c7f3c5018db9e8",
-    measurementId: "G-JDMCD15P70"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
+
 };
 
 // ── Initialise once ─────────────────────────────────────
