@@ -188,7 +188,6 @@
     <script>
         const portalLink = document.getElementById('auth-gate-link');
         const sessionActive = localStorage.getItem('mesokurtic_admin_session') === 'true';
-
         if (sessionActive) {
             portalLink.innerText = "Open Console";
             portalLink.href = "dashboard.html";

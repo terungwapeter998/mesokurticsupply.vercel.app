@@ -7,10 +7,17 @@
     <title>Mesokurtic - Fleet Administration</title>
 
     <script type="module">
+        import { dispatch } from './js/state.js';
+
         const session = JSON.parse(localStorage.getItem('mesokurtic_auth'));
+
         // Strict deterministic check: Admin email required
         if (!session || !session.email.endsWith('@company.com')) {
             window.location.replace('index.html');
+        } else {
+            // Update global state with the authenticated user
+            // Note: top-level await is supported in modules
+            await dispatch('SET_USER', { role: 'admin', email: session.email });
         }
     </script>
 
@@ -40,7 +47,6 @@
             line-height: 1.6;
         }
 
-        /* --- NAVBAR --- */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -148,6 +154,7 @@
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 800;
+            text-transform: uppercase;
         }
 
         .status-active {
@@ -211,6 +218,9 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Ensure pathing matches your project structure
+        import { dispatch } from './js/state.js';
+
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "mesokurtic-live.firebaseapp.com",
@@ -224,20 +234,19 @@
         const db = getFirestore(app);
         const fleetRef = collection(db, "fleet");
 
-        // UI DOM ELEMENTS
         const listArea = document.getElementById("fleet-list");
         const saveBtn = document.getElementById('saveBtn');
         const truckInput = document.getElementById('truckIdInput');
         const statusInput = document.getElementById('statusInput');
 
-        // REPOSITORY PATTERN: Deterministic Save
+        // Logic to Save Vehicle
         saveBtn.addEventListener('click', async () => {
             const truckId = truckInput.value.trim().toUpperCase();
             const status = statusInput.value;
 
             if (!truckId) return alert("System Invariant: Truck ID required.");
 
-            saveBtn.disabled = true; // State lock
+            saveBtn.disabled = true;
             try {
                 await addDoc(fleetRef, {
                     truckId,
@@ -252,9 +261,9 @@
             }
         });
 
-        // VIEW ADAPTER: Deterministic Rendering (No innerHTML += leaks)
+        // Real-time UI synchronization
         onSnapshot(fleetRef, (snapshot) => {
-            listArea.textContent = ""; // Clear state safely
+            listArea.textContent = "";
 
             if (snapshot.empty) {
                 const emptyMsg = document.createElement('p');
@@ -269,7 +278,6 @@
                 const card = document.createElement('div');
                 card.className = 'fleet-card';
 
-                // Deterministic Node Creation (Anti-XSS)
                 card.innerHTML = `
                     <div>
                         <small style="color: #94a3b8; font-size: 0.7rem;">UID: ${doc.id.substring(0, 8)}</small>
@@ -281,6 +289,9 @@
             });
         });
     </script>
+
+    <script type="module" src="./js/state.js"></script>
+    <script type="module" src="./js/auth.js"></script>
 </body>
 
 </html>

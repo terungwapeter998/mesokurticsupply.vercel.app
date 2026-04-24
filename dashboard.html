@@ -10,7 +10,7 @@
         rel="stylesheet">
 
     <style>
-        /* 🛡️ AUTH INVARIANT: Hidden until session is verified */
+        /* 🛡️ AUTH INVARIANT: Hidden until session is verified via Firebase */
         body {
             display: none;
             margin: 0;
@@ -279,7 +279,7 @@
     </div>
 
     <script type="module">
-        import { firebaseAuth } from './firebase-gate.js';
+        import { firebaseAuth } from './js/firebase-gate.js';
         import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const emailEl = document.getElementById('admin-email');
@@ -302,25 +302,27 @@
                 return;
             }
 
-            // Success State
+            // Success State: Verify admin domain if necessary here
             authResolved = true;
             localStorage.setItem('mesokurtic_admin_session', 'true');
             emailEl.innerText = user.email;
+
+            // Critical: Unlock UI
             document.body.style.display = "block";
 
-            // 3. Optional: Connect real-time counts
+            // 3. Real-time Firestore Sync
             const db = getFirestore();
             onSnapshot(collection(db, 'shipments'), (snap) => {
                 statShipments.innerText = snap.size;
             });
         });
 
-        // Safety redirect if auth hangs
+        // Safety redirect if auth hangs (network timeout)
         setTimeout(() => {
             if (!authResolved) window.location.replace("login.html");
-        }, 4000);
+        }, 5000);
 
-        // 4. Corrected Logout Logic
+        // 4. Logout Logic
         logoutBtn.addEventListener('click', async () => {
             if (confirm("Confirm system logout?")) {
                 try {
@@ -333,6 +335,9 @@
             }
         });
     </script>
+
+    <script type="module" src="./js/state.js"></script>
+    <script type="module" src="./js/auth.js"></script>
 </body>
 
 </html>

@@ -139,58 +139,23 @@
 
         .director-info h3 {
             font-family: 'Montserrat', sans-serif;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             color: var(--primary-navy);
+        }
+
+        .director-info .title-tag {
+            color: var(--accent-green);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            display: block;
         }
 
         .director-info p {
             font-size: 0.95rem;
             color: var(--text-slate);
             margin-bottom: 12px;
-        }
-
-        /* --- IDENTITY & VISION --- */
-        .vision-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .vision-item {
-            background: #f1f5f9;
-            padding: 30px;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-green);
-        }
-
-        .vision-item h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            color: var(--primary-navy);
-            text-transform: uppercase;
-        }
-
-        /* --- VALUES LIST --- */
-        .values-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-        }
-
-        .value-box {
-            padding: 15px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .value-box strong {
-            color: var(--accent-green);
-            font-family: 'Montserrat', sans-serif;
-            display: block;
-            margin-bottom: 5px;
-            font-size: 1.1rem;
         }
 
         /* SIDE NAVIGATION */
@@ -218,6 +183,28 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        /* CORPORATE IDENTITY SECTION */
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .vision-item {
+            background: #f1f5f9;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .vision-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
         @media (max-width: 768px) {
             .director-profile {
                 flex-direction: column;
@@ -225,11 +212,7 @@
 
             .director-img {
                 width: 100%;
-                height: 350px;
-            }
-
-            .values-list {
-                grid-template-columns: 1fr;
+                height: 320px;
             }
         }
     </style>
@@ -261,20 +244,29 @@
     </header>
 
     <main class="container">
-
         <section class="white-card">
-            <h2 class="section-title">Board of Directors & Management</h2>
+            <h2 class="section-title">Directors and Management Profile</h2>
             <div class="director-grid">
 
                 <article class="director-profile">
                     <img src="assets/image/director.jpg" alt="Mr. Ademeso Olakunle Samuel" class="director-img">
                     <div class="director-info">
                         <h3>Mr. Ademeso Olakunle Samuel</h3>
-                        <p><strong>Founder / Director</strong></p>
-                        <p>A graduate of Physics from Obafemi Awolowo University with an MBA in Procurement and Supply
-                            Chain Management from LAUTECH. Chartered member of CISCM and CIWMM.</p>
-                        <p>With experience spanning Guinness Nigeria and Dangote Petroleum Refinery, Mr. Samuel leads
-                            our strategic supply chain initiatives.</p>
+                        <span class="title-tag">Founder / Managing Director</span>
+                        <p>Mr. Ademeso Olakunle Samuel holds a Bachelor’s degree in Physics from the prestigious Obafemi
+                            Awolowo University(OAU). He earned a Master’s degree in Business Administration(MBA) with a
+                            specialization in Procurement and Supply Chain Management from Ladoke Akintola University of
+                            Science and Technology (LAUTECH).</p>
+                        <p>He is a member of the Chartered Institute of Supply Chain Management and the Chartered
+                            Institute of Warehousing and Materials Management. He also holds a Diploma in Transport and
+                            Logistics Management from the College of Logistics and Supply Chain Management,
+                            International Premier Business School.</p>
+                        <p>Mr. Olakunle began his professional career at Guinness Nigeria Plc (Machfinh Ltd.) as a Stock
+                            Verifier in 2013, where he and his team managed inventory and supported logistics
+                            operations. He later joined Arowolo Oil and Gas as a Manager in 2016, overseeing more than
+                            ten (10) fuel stations, before progressing to the role of Business Developer in 2018.</p>
+                        <p>In 2020, he joined Dangote Petroleum Refinery and Petrochemicals as a Supply Chain
+                            Specialist, a position he currently holds.</p>
                     </div>
                 </article>
 
@@ -282,11 +274,33 @@
                     <img src="assets/image/director2.jpg" alt="Mrs. Eneji Taiwo Abiola" class="director-img">
                     <div class="director-info">
                         <h3>Mrs. Eneji Taiwo Abiola</h3>
-                        <p><strong>Supply Chain Specialist</strong></p>
-                        <p>Seasoned professional with over a decade of experience across manufacturing. MBA candidate at
-                            Rome Business School and Category Manager at Livestock Feeds PLC.</p>
-                        <p>She specializes in cost optimization and procurement planning, ensuring Mesokurtic maintains
-                            a lean and efficient operational model.</p>
+                        <span class="title-tag">Executive Director</span>
+                        <p>Mrs. Eneji Taiwo Abiola is a seasoned Procurement and Supply Chain Management professional
+                            with over a decade of experience in strategic sourcing, category management, procurement
+                            planning, and supply chain operations across manufacturing and service industries.</p>
+                        <p>She holds a Bachelor of Business Administration from Lead City University, Ibadan, and is
+                            currently pursuing a Master’s degree in Logistics and Supply Chain Management at Rome
+                            Business School.</p>
+                        <p>She also holds an Executive Business Leadership Development Certificate from Rome Business
+                            School, a Postgraduate Diploma in Procurement and Supply Chain Management from the College
+                            of Logistics & Supply Chain Management, as well as a Professional Diploma in Procurement,
+                            Sourcing and Supply Chains.</p>
+                        <p>She is a Chartered Member of the Chartered Institute of Supply Chain Management and an
+                            Associate Member of the Chartered Institute of Warehousing and Materials Management.</p>
+                        <p>Mrs Taiwo began her professional career with Ohams Realty Limited in 2013 as a Business
+                            Development Executive/Administrative Officer. In 2014, she joined Meyer Plc as a Purchasing
+                            and Supply Officer, where she later rose to the position of Acting Head, Purchasing and
+                            Supply, overseeing procurement operations for manufacturing materials and logistics
+                            services.</p>
+                        <p>She later joined Shepherdhill Security Limited in 2021 as Senior Executive, Administration,
+                            managing procurement, logistics, and administrative operations.</p>
+                        <p>In 2024, she joined Livestock Feeds Plc (a subsidiary of UAC Nigeria Plc) as Category Manager
+                            (Indirect) a position she currently holds, where she manages procurement planning, supplier
+                            coordination, spend analysis, cost and inventory optimization supporting continuous
+                            manufacturing operations.</p>
+                        <p>Mrs Taiwo has built strong expertise in supplier relationship management, procurement
+                            analytics, inventory planning, and cost optimization, contributing to improved operational
+                            efficiency and supply chain performance in the organizations she has served.</p>
                     </div>
                 </article>
 
@@ -294,8 +308,8 @@
                     <img src="assets/image/director3.jpg" alt="Mr. Adebayo Olusoga David" class="director-img">
                     <div class="director-info">
                         <h3>Mr. Adebayo Olusoga David</h3>
-                        <p><strong>Operations Manager</strong></p>
-                        <p>Holds a Masters in Business Administration from Rome Business School with an extensive
+                        <span class="title-tag">Director</span>
+                        <p>Holds a Master’s in Business Administration from Rome Business School with an extensive
                             background in sales and travel retail operations.</p>
                         <p>He oversees our operational growth, ensuring our logistics flow remains uninterrupted across
                             the Nigerian retail landscape.</p>
@@ -310,7 +324,6 @@
             <p><strong>Mesokurtic Supply Chain Limited</strong> is a registered Nigerian private limited liability
                 company specializing in transport, warehousing, redistribution, inbound logistics, merchandising, and
                 supply chain consulting.</p>
-
             <div class="vision-grid">
                 <div class="vision-item">
                     <h3>Our Vision</h3>
@@ -320,50 +333,10 @@
                 <div class="vision-item">
                     <h3>Mission</h3>
                     <p>To provide cost-effective, befitting business solutions and be the vanguard in the provision of
-                        these services, which will ensure that the very needs of our customers are continually met.</p>
-                </div>
-                <div class="vision-item">
-                    <h3>Our Edge</h3>
-                    <p>We provide excellent product or service based on scope, cost and time without compromising
-                        quality.</p>
+                        these services.</p>
                 </div>
             </div>
         </section>
-
-        <section class="white-card">
-            <h2 class="section-title">Our Core Values</h2>
-            <p style="margin-bottom: 25px; font-style: italic;">Our core values depicted by unbending flairs and
-                attributes are:</p>
-
-            <div class="values-list">
-                <div class="value-box">
-                    <strong>Integrity</strong>
-                    <p>Our foremost standard of conduct. Our word, our bond.</p>
-                </div>
-                <div class="value-box">
-                    <strong>Excellence</strong>
-                    <p>Nothing else satisfies but excellence; being the best at what we do.</p>
-                </div>
-                <div class="value-box">
-                    <strong>Innovation</strong>
-                    <p>Keeps us at the apex of development and strategy in all our chosen markets.</p>
-                </div>
-                <div class="value-box">
-                    <strong>Learning</strong>
-                    <p>At the centre of our heart is continuous learning.</p>
-                </div>
-                <div class="value-box">
-                    <strong>Diversity</strong>
-                    <p>We realize the value in actively recruiting, developing and mentoring talented individuals of
-                        diverse cultures and background.</p>
-                </div>
-                <div class="value-box">
-                    <strong>Citizenship</strong>
-                    <p>Our commitment to the communities in which we work and live.</p>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <footer

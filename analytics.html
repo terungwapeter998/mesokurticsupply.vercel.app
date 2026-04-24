@@ -39,7 +39,6 @@
             color: var(--primary-navy);
         }
 
-        /* --- Design Integrity: Navbar --- */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -96,7 +95,6 @@
             margin-bottom: 24px;
         }
 
-        /* KPI Layout */
         .kpi-strip {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -130,7 +128,6 @@
             font-weight: 800;
         }
 
-        /* Analytics Grid */
         .charts-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -255,11 +252,11 @@
         <div class="charts-grid">
             <section class="panel">
                 <h2>Volume Trend <span style="color: var(--accent-green); font-size: 0.7rem;">● Live</span></h2>
-                <canvas id="chart-timeline"></canvas>
+                <div style="height: 300px;"><canvas id="chart-timeline"></canvas></div>
             </section>
             <section class="panel">
                 <h2>Status Distribution</h2>
-                <canvas id="chart-status"></canvas>
+                <div style="height: 300px;"><canvas id="chart-status"></canvas></div>
             </section>
             <section class="panel" style="grid-column: 1 / -1;">
                 <h2>Top Logistics Corridors</h2>
@@ -269,7 +266,7 @@
                             <th>Route</th>
                             <th>Count</th>
                             <th>Avg Weight</th>
-                            <th>Share</th>
+                            <th style="width: 30%;">Share</th>
                         </tr>
                     </thead>
                     <tbody id="routes-tbody">
@@ -286,7 +283,15 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot, query, orderBy, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        const firebaseConfig = { /* USE YOUR CONFIG */ };
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "mesokurtic-live.firebaseapp.com",
+            projectId: "mesokurtic-live",
+            storageBucket: "mesokurtic-live.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -320,7 +325,7 @@
             document.getElementById('kpi-tons').textContent = total ? (totalTons / total).toFixed(1) : '0';
             document.getElementById('kpi-delay').textContent = total ? ((delayed / total) * 100).toFixed(0) + '%' : '0%';
 
-            // 2. Chart Update (Optimized)
+            // 2. Chart Update
             statusChart.data.datasets[0].data = [
                 data.filter(d => d.status === 'In Transit').length,
                 delivered, delayed,
@@ -345,7 +350,11 @@
                     <td><b>${name}</b></td>
                     <td>${stats.count}</td>
                     <td>${(stats.tons / stats.count).toFixed(1)} T</td>
-                    <td><div class="bar-bg"><div class="bar-fill" style="width:${(stats.count / max) * 100}%"></div></div></td>
+                    <td>
+                        <div class="bar-bg">
+                            <div class="bar-fill" style="width:${(stats.count / max) * 100}%"></div>
+                        </div>
+                    </td>
                 </tr>
             `).join('');
         });
@@ -359,4 +368,20 @@
             const snap = await getDocs(query(collection(db, 'fleet'), where("truckId", "==", id)));
 
             if (snap.empty) {
-                res.innerHTML = `<p style="color:#ef4444; margin-top:10px;">Asset ID ${
+                res.innerHTML = `<p style="color:#ef4444; margin-top:10px;">Asset ID ${id} not found in registry.</p>`;
+            } else {
+                const vehicle = snap.docs[0].data();
+                res.innerHTML = `
+                    <div style="margin-top:15px; padding:15px; background:#f1f5f9; border-radius:8px;">
+                        <strong>Status:</strong> ${vehicle.status} | 
+                        <strong>Last Updated:</strong> ${vehicle.createdAt?.toDate().toLocaleString() || 'N/A'}
+                    </div>`;
+            }
+        });
+    </script>
+
+    <script type="module" src="./js/state.js"></script>
+    <script type="module" src="./js/auth.js"></script>
+</body>
+
+</html>

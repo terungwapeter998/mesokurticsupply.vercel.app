@@ -1,107 +1,43 @@
+// js/state.js
+
 /**
- * MESOKURTIC STATE ENGINE (PRODUCTION READY)
- * Centralized UI + Session State Manager
- * Used across: index, login, dashboard, operations, analytics
+ * Stage 6 Deterministic State Management
+ * Purpose: Ensure every state transition is logged with a hash for audit integrity.
  */
 
-const MS_STATE = (() => {
-
-    // =========================
-    // INTERNAL STATE
-    // =========================
-    let state = {
+const AppState = {
+    identity: {
         user: null,
-        drawerOpen: false
-    };
+        sessionID: crypto.randomUUID(),
+    },
+    inventory: [],
+    auditTrail: [] // The deterministic ledger
+};
 
-    // =========================
-    // LOAD SESSION
-    // =========================
-    const loadUser = () => {
-        try {
-            const raw = sessionStorage.getItem("ms_user");
-            state.user = raw ? JSON.parse(raw) : null;
-        } catch (e) {
-            state.user = null;
-        }
-    };
+/**
+ * Helper to generate a simple hash for the audit trail
+ * In a production environment, we use SHA-256 via the Web Crypto API.
+ */
+async function generateAuditHash(action, data) {
+    const msgUint8 = new TextEncoder().encode(action + JSON.stringify(data) + Date.now());
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
-    // =========================
-    // SAVE SESSION
-    // =========================
-    const saveUser = (user) => {
-        state.user = user;
-        sessionStorage.setItem("ms_user", JSON.stringify(user));
-    };
+export async function dispatch(action, payload) {
+    const timestamp = new Date().toISOString();
+    const hash = await generateAuditHash(action, payload);
 
-    // =========================
-    // CLEAR SESSION
-    // =========================
-    const clearUser = () => {
-        state.user = null;
-        sessionStorage.removeItem("ms_user");
-    };
+    // Update State
+    if (action === 'SET_USER') AppState.identity.user = payload;
 
-    // =========================
-    // AUTH HELPERS
-    // =========================
-    const isAuthenticated = () => {
-        return state.user !== null;
-    };
+    // Record to Ledger
+    const entry = { timestamp, action, payload, hash };
+    AppState.auditTrail.push(entry);
 
-    const getRole = () => {
-        return state.user?.role || null;
-    };
+    console.log(`[AUDIT] Action: ${action} | Hash: ${hash.substring(0, 8)}...`);
+    return AppState;
+}
 
-    // =========================
-    // ROLE PROTECTION (CLIENT SIDE GUARD)
-    // =========================
-    const requireRole = (allowedRoles = []) => {
-        loadUser();
-
-        if (!state.user) {
-            window.location.href = "login.html";
-            return false;
-        }
-
-        if (allowedRoles.length && !allowedRoles.includes(state.user.role)) {
-            window.location.href = "index.html";
-            return false;
-        }
-
-        return true;
-    };
-
-    // =========================
-    // DRAWER STATE
-    // =========================
-    const setDrawer = (open) => {
-        state.drawerOpen = open;
-    };
-
-    const isDrawerOpen = () => state.drawerOpen;
-
-    // =========================
-    // INIT
-    // =========================
-    const init = () => {
-        loadUser();
-        console.log("STATE ENGINE INITIALIZED");
-    };
-
-    return {
-        init,
-        saveUser,
-        clearUser,
-        isAuthenticated,
-        getRole,
-        requireRole,
-        setDrawer,
-        isDrawerOpen,
-        loadUser
-    };
-
-})();
-// 
-// Auto-init on load
-document.addEventListener("DOMContentLoaded", MS_STATE.init);
+export const getState = () => ({ ...AppState });

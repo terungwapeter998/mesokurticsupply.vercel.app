@@ -1,0 +1,26 @@
+{
+  "name": "mesokurtic-ng.org",
+  "version": "1.0.0",
+  "description": "Mesokurtic Supply Chain Limited is a logistics firm dedicated to building robust digital infrastructure and supply chain solutions. This platform serves as the official interface for our operations, designed with a focus on accessibility, logical determinism, and high-performance asset delivery.",
+  "main": "firebase-gate.js",
+  "scripts": {
+    "dev": "serve .",
+    "start": "serve .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peteriorhen998/mesokurtic-ng.org.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/peteriorhen998/mesokurtic-ng.org/issues"
+  },
+  "homepage": "https://github.com/peteriorhen998/mesokurtic-ng.org#readme",
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}

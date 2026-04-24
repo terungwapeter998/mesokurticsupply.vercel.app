@@ -86,7 +86,7 @@
             text-align: center;
         }
 
-        /* --- DYNAMIC SECTIONS --- */
+        /* --- CONTENT --- */
         .container {
             max-width: 1100px;
             margin: -60px auto 50px;
@@ -107,11 +107,6 @@
             margin-bottom: 30px;
             border-left: 5px solid var(--accent-green);
             padding-left: 15px;
-        }
-
-        .item-loading {
-            color: #94a3b8;
-            font-style: italic;
         }
 
         .announcement-item {
@@ -147,6 +142,7 @@
             cursor: pointer;
             border: none;
             text-transform: uppercase;
+            transition: 0.3s;
         }
 
         .apply-btn:hover {
@@ -184,7 +180,7 @@
             cursor: pointer;
         }
 
-        /* SIDE NAV (Standardized) */
+        /* SIDE NAV */
         .side-nav {
             position: fixed;
             top: 0;
@@ -236,16 +232,16 @@
 
     <main class="container">
         <section class="update-section">
-            <h2 class="section-title">Announcements</h2>
+            <h2 class="section-title">Latest Updates</h2>
             <div id="announcements-list">
-                <p class="item-loading">Synchronizing with headquarters...</p>
+                <p style="color:#94a3b8;">Checking for updates...</p>
             </div>
         </section>
 
         <section class="update-section">
             <h2 class="section-title">Open Opportunities</h2>
             <div id="jobs-list">
-                <p class="item-loading">Fetching available slots...</p>
+                <p style="color:#94a3b8;">Scanning for vacancies...</p>
             </div>
         </section>
     </main>
@@ -253,33 +249,50 @@
     <div id="applyModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 style="margin-bottom: 20px;">Submit Application</h2>
+            <h2 style="margin-bottom: 10px;">Apply Now</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-slate);">
+                Position: <span id="target-job" style="font-weight: 700; color: var(--accent-green);"></span>
+            </p>
             <form id="resume-form">
-                <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-slate);">Applying for: <span
-                        id="target-job" style="font-weight: 700;"></span></p>
-                <input type="text" placeholder="Full Name" required
+                <input type="text" id="app-name" placeholder="Full Name" required
                     style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
-                <input type="email" placeholder="Email Address" required
+                <input type="email" id="app-email" placeholder="Email Address" required
                     style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
-                <label style="font-size: 0.8rem; font-weight: 600;">UPLOAD RESUME (PDF)</label>
-                <input type="file" accept=".pdf" required style="width:100%; margin-bottom:20px;">
-                <button type="submit" class="apply-btn" style="width:100%;">Upload & Submit</button>
+
+                <label style="font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 5px;">LINK TO RESUME
+                    (Drive/Dropbox/PDF Link)</label>
+                <input type="url" id="app-resume" placeholder="https://..." required
+                    style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:6px;">
+
+                <button type="submit" class="apply-btn" id="submit-app-btn" style="width:100%;">Submit
+                    Application</button>
             </form>
         </div>
     </div>
 
     <script type="module">
         import { db } from './firebase-gate.js';
-        import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import {
+            collection,
+            getDocs,
+            addDoc,
+            query,
+            orderBy,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // 1. Fetch Announcements
+        // 1. Load Announcements
         async function loadAnnouncements() {
             const container = document.getElementById('announcements-list');
             try {
                 const q = query(collection(db, "announcements"), orderBy("date", "desc"));
-                const querySnapshot = await getDocs(q);
+                const snap = await getDocs(q);
+                if (snap.empty) {
+                    container.innerHTML = "<p style='color:#94a3b8;'>No new announcements at this time.</p>";
+                    return;
+                }
                 container.innerHTML = '';
-                querySnapshot.forEach((doc) => {
+                snap.forEach(doc => {
                     const data = doc.data();
                     container.innerHTML += `
                         <div class="announcement-item">
@@ -288,33 +301,74 @@
                             <p>${data.content}</p>
                         </div>`;
                 });
-            } catch (e) { container.innerHTML = "Announcements are currently offline."; }
+            } catch (e) { container.innerHTML = "Unable to load updates."; }
         }
 
-        // 2. Fetch Jobs
+        // 2. Load Jobs or Show General Application
         async function loadJobs() {
             const container = document.getElementById('jobs-list');
             try {
-                const querySnapshot = await getDocs(collection(db, "jobs"));
+                const snap = await getDocs(collection(db, "jobs"));
                 container.innerHTML = '';
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    container.innerHTML += `
+
+                if (snap.empty) {
+                    // Scenario: No active vacancy, show general talent pool option
+                    container.innerHTML = `
                         <div class="announcement-item">
-                            <h3>${data.role}</h3>
-                            <p><strong>Location:</strong> ${data.location}</p>
-                            <p>${data.description}</p>
-                            <button class="apply-btn" onclick="openModal('${data.role}')">Submit Resume</button>
+                            <h3>General Talent Pool</h3>
+                            <p>We are not actively hiring for specific roles right now, but we are always looking for great talent. Submit your resume and we will contact you when a vacancy opens.</p>
+                            <button class="apply-btn" onclick="openModal('General Application')">Submit to Talent Pool</button>
                         </div>`;
-                });
+                } else {
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        container.innerHTML += `
+                            <div class="announcement-item">
+                                <h3>${data.role}</h3>
+                                <p><strong>Location:</strong> ${data.location}</p>
+                                <p>${data.description}</p>
+                                <button class="apply-btn" onclick="openModal('${data.role}')">Apply for this Role</button>
+                            </div>`;
+                    });
+                }
             } catch (e) { container.innerHTML = "Job listings currently unavailable."; }
         }
 
+        // 3. Application Submission Logic
+        const applyForm = document.getElementById('resume-form');
+        applyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-app-btn');
+            btn.innerText = "Submitting...";
+            btn.disabled = true;
+
+            const applicationData = {
+                candidateName: document.getElementById('app-name').value,
+                email: document.getElementById('app-email').value,
+                resumeLink: document.getElementById('app-resume').value,
+                roleApplied: document.getElementById('target-job').innerText,
+                submittedAt: serverTimestamp()
+            };
+
+            try {
+                await addDoc(collection(db, "applications"), applicationData);
+                alert("Application submitted successfully! Our HR team will review it.");
+                closeModal();
+                applyForm.reset();
+            } catch (err) {
+                alert("Error submitting application. Please try again.");
+                console.error(err);
+            } finally {
+                btn.innerText = "Upload & Submit";
+                btn.disabled = false;
+            }
+        });
+
+        // Modal Helpers
         window.openModal = (jobTitle) => {
             document.getElementById('target-job').innerText = jobTitle;
             document.getElementById('applyModal').style.display = 'block';
         }
-
         window.closeModal = () => {
             document.getElementById('applyModal').style.display = 'none';
         }
@@ -326,6 +380,9 @@
     <script>
         function toggleMenu() { document.getElementById('sideNav').classList.toggle('active'); }
     </script>
+
+    <script type="module" src="./js/state.js"></script>
+    <script type="module" src="./js/auth.js"></script>
 </body>
 
 </html>
