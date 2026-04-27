@@ -1,0 +1,26 @@
+# 1. Global: Auto-detect text files and normalize line endings to LF on commit
+* text=auto
+
+# 2. Web/Engineering: Explicitly force LF for source and config files
+# This prevents Windows CRLF from leaking into your production environment
+*.js      text eol=lf
+*.jsx     text eol=lf
+*.ts      text eol=lf
+*.tsx     text eol=lf
+*.json    text eol=lf
+*.css     text eol=lf
+*.html    text eol=lf
+*.xml     text eol=lf
+*.md      text eol=lf
+
+# 3. Infrastructure: Ensure shell scripts always use LF (or they will fail on Linux/Vercel)
+*.sh      text eol=lf
+
+# 4. Binary: Explicitly mark assets to prevent Git from touching them
+*.jpg     binary
+*.png     binary
+*.gif     binary
+*.ico     binary
+*.pdf     binary
+*.woff    binary
+*.woff2   binary
