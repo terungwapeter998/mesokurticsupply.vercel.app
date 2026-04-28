@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /dashboard.html
+Disallow: /operations.html
+Disallow: /analytics.html
+Disallow: /login.html
+
+Sitemap: https://mesokurticsupply.vercel.app/sitemap.xml
