@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Cargo Ingestion Portal | Mesokurtic Supply Chain Ltd</title>
+    <style>
+        :root {
+            /* Restructured to Unified Emerald Design Tokens */
+            --primary: #064e3b;
+            /* Deep Emerald Core */
+            --accent: #10b981;
+            /* Crisp Mint Accent */
+            --accent-hover: #059669;
+            /* Controlled Invariant State Hover */
+            --text-main: #0f172a;
+            /* Slate 900 Content Body */
+            --text-muted: #475569;
+            /* Slate 600 Sub-labeling */
+            --bg-surface: #f0fdf4;
+            /* High-integrity Light Mint Base */
+            --border-element: #bbf7d0;
+            /* Crisp Boundary Mapping Lines */
+            --danger: #dc2626;
+            /* System Exception Alert Crimson */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- Navigation Action Bar CSS --- */
+        .nav-action-bar {
+            max-width: 750px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .btn-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #ffffff;
+            color: var(--primary);
+            border: 1px solid var(--border-element);
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+        }
+
+        .btn-return:hover {
+            background-color: #f8fafc;
+            border-color: var(--accent-hover);
+        }
+
+        .menu-dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 6px);
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border-radius: 6px;
+            border: 1px solid var(--border-element);
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .menu-dropdown-content a {
+            color: var(--text-main);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background-color 0.1s ease;
+        }
+
+        .menu-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .menu-dropdown-content a:hover {
+            background-color: #f0fdf4;
+            color: var(--primary);
+        }
+
+        /* Interactive visibility via utility class */
+        .menu-dropdown-content.show {
+            display: block;
+        }
+
+        /* --- Ingestion Card Layout --- */
+        .portal-wrapper {
+            max-width: 750px;
+            margin: 0 auto 40px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            border: 1px solid var(--border-element);
+            overflow: hidden;
+        }
+
+        .portal-header {
+            background: var(--primary);
+            color: #ffffff;
+            padding: 32px 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .portal-brand-logo {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .portal-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .portal-header p {
+            margin: 0;
+            color: #a7f3d0;
+            font-size: 14px;
+            letter-spacing: 0.025em;
+        }
+
+        .portal-body {
+            padding: 32px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.075em;
+            color: var(--accent-hover);
+            font-weight: 700;
+            margin: 28px 0 16px 0;
+            border-bottom: 2px solid #dcfce7;
+            padding-bottom: 8px;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-element);
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #ffffff;
+            color: var(--text-main);
+            box-sizing: border-box;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-hover);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+
+        select:disabled {
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .security-banner {
+            background-color: #fef2f2;
+            border-left: 4px solid var(--danger);
+            padding: 16px;
+            border-radius: 0 6px 6px 0;
+            margin: 24px 0;
+        }
+
+        .security-banner label {
+            color: #991b1b;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .security-banner input[type="checkbox"] {
+            width: auto;
+            margin-top: 3px;
+            accent-color: var(--danger);
+        }
+
+        .alert-box {
+            background-color: #fff5f5;
+            color: var(--danger);
+            border: 1px solid #feb2b2;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 24px;
+            display: none;
+            line-height: 1.4;
+        }
+
+        .btn-submit {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.15s ease;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary);
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .portal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Unified Top Navigation Control Layer -->
+    <div class="nav-action-bar">
+        <a href="dashboard.html" class="btn-return">
+            <!-- Programmatic Left Chevron Icon -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Dashboard
+        </a>
+
+        <div class="menu-dropdown-wrapper">
+            <button type="button" class="btn-return" id="menuDropdownBtn">
+                System Menu
+                <!-- Dropdown Arrow Icon -->
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <!-- Dropdown Options linking to file tree siblings seen in Screenshot 2026-05-31 112302.jpg -->
+            <div class="menu-dropdown-content" id="menuDropdownContent">
+                <a href="dashboard.html">Overview Dashboard</a>
+                <a href="analytics.html">Analytics & Metrics</a>
+                <a href="fleet-dashboard.html">Fleet Logistics Tracking</a>
+                <a href="about.html">About Mesokurtic</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="portal-wrapper">
+        <div class="portal-header">
+            <img src="assets/image/logo.png" alt="Mesokurtic Supply Chain Ltd Logo" class="portal-brand-logo">
+            <h2>Mesokurtic Air Cargo Shipment Form</h2>
+            <p>Global Air Freight Ingestion Network</p>
+        </div>
+
+        <div class="portal-body">
+            <div id="securityAlert" class="alert-box" role="alert"></div>
+
+            <form id="cargoForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID_HERE" method="POST">
+
+                <div class="section-title">1. Origin & Shipper Credentials (Nigeria)</div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="senderName">Shipper / Sender Full Name</label>
+                        <input type="text" name="Sender_Name" id="senderName" placeholder="e.g., Aliko Benson" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="senderPhone">Contact Phone (Nigeria)</label>
+                        <input type="tel" name="Sender_Phone" id="senderPhone" placeholder="e.g., +234..." required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="departureAirport">Departure Airport Hub (Nigeria)</label>
+                    <select name="Departure_Airport" id="departureAirport" required>
+                        <option value="" disabled selected>Select departure cargo hub...</option>
+                        <option value="LOS - Murtala Muhammed International Airport, Lagos">Murtala Muhammed
+                            International Airport (LOS) - Lagos</option>
+                        <option value="ABV - Nnamdi Azikiwe International Airport, Abuja">Nnamdi Azikiwe International
+                            Airport (ABV) - Abuja</option>
+                        <option value="PHC - Port Harcourt International Airport, Port Harcourt">Port Harcourt
+                            International Airport (PHC) - Port Harcourt</option>
+                        <option value="KAN - Mallam Aminu Kano International Airport, Kano">Mallam Aminu Kano
+                            International Airport (KAN) - Kano</option>
+                        <option value="ENU - Akanu Ibiam International Airport, Enugu">Akanu Ibiam International Airport
+                            (ENU) - Enugu</option>
+                    </select>
+                </div>
+
+                <div class="section-title">2. Destination & Consignee Credentials</div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="receiverName">Receiver / Consignee Full Name</label>
+                        <input type="text" name="Receiver_Name" id="receiverName" placeholder="e.g., Amara Smith"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="receiverPhone">Contact Phone (Destination)</label>
+                        <input type="tel" name="Receiver_Phone" id="receiverPhone"
+                            placeholder="International format with country code..." required>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="destinationCountry">Destination Country</label>
+                        <select name="Destination_Country" id="destinationCountry" required>
+                            <option value="" disabled selected>Choose country...</option>
+                            <option value="UK">United Kingdom (UK)</option>
+                            <option value="FRANCE">France</option>
+                            <option value="GERMANY">Germany</option>
+                            <option value="CANADA">Canada</option>
+                            <option value="USA">United States (USA)</option>
+                            <option value="AUSTRALIA">Australia</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="arrivalAirport">Arrival International Airport</label>
+                        <select name="Arrival_Airport" id="arrivalAirport" required disabled>
+                            <option value="" disabled selected>Select country first...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryAddress">Delivery Street Address & Postal / ZIP Code</label>
+                    <textarea name="Delivery_Address" id="deliveryAddress" rows="2"
+                        placeholder="Provide complete international delivery address including local postal/zip code..."
+                        required></textarea>
+                </div>
+
+                <div class="section-title">3. Cargo Metrics & Description</div>
+                <div class="form-group">
+                    <label for="actualWeightKg">Measured Weight (KG)</label>
+                    <input type="number" name="Cargo_Weight_KG" id="actualWeightKg" step="0.1" min="0.1"
+                        placeholder="0.0" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemDescription">Complete Packing List / Item Description</label>
+                    <textarea name="Item_Description" id="itemDescription" rows="3"
+                        placeholder="Comprehensively list all specific physical contents of this parcel (e.g., 5 Traditional Ankara Clothes, 2KG Spices)..."
+                        required></textarea>
+                </div>
+
+                <div class="security-banner">
+                    <label for="securityDeclaration">
+                        <input type="checkbox" id="securityDeclaration" required>
+                        <span>I explicitly declare that this package does not contain contraband, narcotics,
+                            prescription medications, liquid cosmetics, charcoal, power banks, aerosols, or raw lithium
+                            batteries. I understand that Mesokurtic Supply Chain Ltd will perform physical inspections
+                            and report violations to airport security and customs authorities immediately.</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit">Authorize & Dispatch Manifest</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Dropdown UX State Manager
+        const dropBtn = document.getElementById('menuDropdownBtn');
+        const dropContent = document.getElementById('menuDropdownContent');
+
+        dropBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            dropContent.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function () {
+            if (dropContent.classList.contains('show')) {
+                dropContent.classList.remove('show');
+            }
+        });
+
+        // Dynamic Cascading Selection Arrays
+        const destinationAirports = {
+            UK: [
+                { value: "LHR - London Heathrow Airport", label: "London Heathrow Airport (LHR) - London" },
+                { value: "LGW - London Gatwick Airport", label: "London Gatwick Airport (LGW) - London" },
+                { value: "MAN - Manchester Airport", label: "Manchester Airport (MAN) - Manchester" },
+                { value: "STN - London Stansted Airport", label: "London Stansted Airport (STN) - Essex" },
+                { value: "BHX - Birmingham Airport", label: "Birmingham Airport (BHX) - Birmingham" },
+                { value: "EDI - Edinburgh Airport", label: "Edinburgh Airport (EDI) - Edinburgh" },
+                { value: "GLA - Glasgow Airport", label: "Glasgow Airport (GLA) - Glasgow" }
+            ],
+            FRANCE: [
+                { value: "CDG - Paris Charles de Gaulle Airport", label: "Paris Charles de Gaulle Airport (CDG) - Paris" },
+                { value: "ORY - Paris Orly Airport", label: "Paris Orly Airport (ORY) - Paris" },
+                { value: "NCE - Nice Côte d'Azur Airport", label: "Nice Côte d'Azur Airport (NCE) - Nice" },
+                { value: "LYS - Lyon-Saint Exupéry Airport", label: "Lyon-Saint Exupéry Airport (LYS) - Lyon" },
+                { value: "MRS - Marseille Provence Airport", label: "Marseille Provence Airport (MRS) - Marseille" },
+                { value: "TLS - Toulouse-Blagnac Airport", label: "Toulouse-Blagnac Airport (TLS) - Toulouse" }
+            ],
+            GERMANY: [
+                { value: "FRA - Frankfurt Airport", label: "Frankfurt Airport (FRA) - Frankfurt" },
+                { value: "MUC - Munich Airport", label: "Munich Airport (MUC) - Munich" },
+                { value: "BER - Berlin Brandenburg Airport", label: "Berlin Brandenburg Airport (BER) - Berlin" },
+                { value: "DUS - Düsseldorf Airport", label: "Düsseldorf Airport (DUS) - Düsseldorf" },
+                { value: "HAM - Hamburg Airport", label: "Hamburg Airport (HAM) - Hamburg" },
+                { value: "CGN - Cologne Bonn Airport", label: "Cologne Bonn Airport (CGN) - Cologne" }
+            ],
+            CANADA: [
+                { value: "YYZ - Toronto Pearson International Airport, ON", label: "Toronto Pearson International Airport (YYZ) - Toronto, ON" },
+                { value: "YVR - Vancouver International Airport, BC", label: "Vancouver International Airport (YVR) - Vancouver, BC" },
+                { value: "YUL - Montréal-Trudeau International Airport, QC", label: "Montréal-Trudeau International Airport (YUL) - Montréal, QC" },
+                { value: "YYC - Calgary International Airport, AB", label: "Calgary International Airport (YYC) - Calgary, AB" },
+                { value: "YEG - Edmonton International Airport, AB", label: "Edmonton International Airport (YEG) - Edmonton, AB" },
+                { value: "YWG - Winnipeg International Airport, MB", label: "Winnipeg International Airport (YWG) - Winnipeg, MB" },
+                { value: "YHZ - Halifax Stanfield International Airport, NS", label: "Halifax Stanfield International Airport (YHZ) - Halifax, NS" },
+                { value: "YOW - Ottawa Macdonald-Cartier International Airport, ON", label: "Ottawa Macdonald-Cartier International Airport (YOW) - Ottawa, ON" }
+            ],
+            USA: [
+                { value: "JFK - John F. Kennedy International Airport, NY", label: "John F. Kennedy International Airport (JFK) - New York, NY" },
+                { value: "LAX - Los Angeles International Airport, CA", label: "Los Angeles International Airport (LAX) - Los Angeles, CA" },
+                { value: "ORD - O'Hare International Airport, IL", label: "O'Hare International Airport (ORD) - Chicago, IL" },
+                { value: "DFW - Dallas/Fort Worth International Airport, TX", label: "Dallas/Fort Worth International Airport (DFW) - Dallas, TX" },
+                { value: "ATL - Hartsfield-Jackson Atlanta International Airport, GA", label: "Hartsfield-Jackson International Airport (ATL) - Atlanta, GA" },
+                { value: "MIA - Miami International Airport, FL", label: "Miami International Airport (MIA) - Miami, FL" },
+                { value: "IAH - George Bush Intercontinental Airport, TX", label: "George Bush Intercontinental Airport (IAH) - Houston, TX" },
+                { value: "EWR - Newark Liberty International Airport, NJ", label: "Newark Liberty International Airport (EWR) - Newark, NJ" },
+                { value: "SFO - San Francisco International Airport, CA", label: "San Francisco International Airport (SFO) - San Francisco, CA" },
+                { value: "IAD - Washington Dulles International Airport, VA", label: "Washington Dulles International Airport (IAD) - Washington, DC" }
+            ],
+            AUSTRALIA: [
+                { value: "SYD - Sydney Kingsford Smith Airport, NSW", label: "Sydney Kingsford Smith Airport (SYD) - Sydney, NSW" },
+                { value: "MEL - Melbourne Airport, VIC", label: "Melbourne Airport (MEL) - Melbourne, VIC" },
+                { value: "BNE - Brisbane Airport, QLD", label: "Brisbane Airport (BNE) - Brisbane, QLD" },
+                { value: "PER - Perth Airport, WA", label: "Perth Airport (PER) - Perth, WA" },
+                { value: "ADL - Adelaide Airport, SA", label: "Adelaide Airport (ADL) - Adelaide, SA" }
+            ]
+        };
+
+        const countryNode = document.getElementById('destinationCountry');
+        const airportNode = document.getElementById('arrivalAirport');
+
+        countryNode.addEventListener('change', function () {
+            const activeCountry = this.value;
+            airportNode.innerHTML = '<option value="" disabled selected>Select destination airport hub...</option>';
+
+            if (destinationAirports[activeCountry]) {
+                airportNode.disabled = false;
+                destinationAirports[activeCountry].forEach(airport => {
+                    const el = document.createElement('option');
+                    el.value = airport.value;
+                    el.textContent = airport.label;
+                    airportNode.appendChild(el);
+                });
+            } else {
+                airportNode.disabled = true;
+            }
+        });
+
+        // Local Structural Sanitization Engine
+        document.getElementById('cargoForm').addEventListener('submit', function (e) {
+            const alertBox = document.getElementById('securityAlert');
+            alertBox.style.display = 'none';
+
+            const itemDescription = document.getElementById('itemDescription').value.toLowerCase();
+            const prohibitedCargo = ['weed', 'tramadol', 'codeine', 'battery', 'lithium', 'drugs', 'pills', 'charcoal', 'ponmo', 'gun', 'weapon', 'cannabis', 'aerosol'];
+
+            for (const token of prohibitedCargo) {
+                if (itemDescription.includes(token)) {
+                    e.preventDefault();
+                    alertBox.innerText = `SECURITY REJECTION: Cargo profile contains explicit contraband or flight risk item ("${token.toUpperCase()}"). Transaction terminated.`;
+                    alertBox.style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

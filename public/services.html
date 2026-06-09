@@ -7,7 +7,7 @@
     <title>Our Services | Mesokurtic Supply Chain</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap"
         rel="stylesheet">
-
+    <!--  -->
     <style>
         :root {
             --primary-navy: #0f172a;
@@ -158,6 +158,40 @@
             line-height: 1.7;
         }
 
+        .service-card .hub-tags {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .service-card .hub-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: #f1f5f9;
+            color: var(--primary-navy);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .service-card .action-link {
+            margin-top: auto;
+            padding-top: 20px;
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+
+        .service-card .action-link:hover {
+            color: var(--primary-navy);
+        }
+
         /* --- SIDE NAVIGATION (Matching Menu.html Style) --- */
         .side-nav {
             position: fixed;
@@ -247,7 +281,8 @@
         <span class="close-btn" onclick="toggleMenu()">&times;</span>
         <a href="index.html">Home</a>
         <a href="about.html">About Us</a>
-        <a href="services.html" style="color: var(--accent-green);">Services</a>
+        <a href="service.html" style="color: var(--accent-green);">Services</a>
+        <a href="cargo-intake.html">Air Cargo Dispatch</a>
         <a href="career.html">Careers</a>
         <a href="dashboard.html">Admin Dashboard</a>
         <a href="login.html" class="portal-link">Portal Login</a>
@@ -261,6 +296,25 @@
 
     <main class="container">
         <div class="services-grid">
+
+            <!-- New Air Cargo Service -->
+            <div class="service-card">
+                <div class="icon-box">✈️</div>
+                <h2>Air Cargo Shipping & Freight</h2>
+                <p>High-priority International freight operations executed under logical determinism. We handle complex
+                    customs clearing and high-integrity manifest validation across six major countries logistics hubs
+                    with
+                    strict hazard containment controls.</p>
+                <div class="hub-tags">
+                    <span class="hub-tag">Canada</span>
+                    <span class="hub-tag">UK</span>
+                    <span class="hub-tag">USA</span>
+                    <span class="hub-tag">Germany</span>
+                    <span class="hub-tag">Australia</span>
+                    <span class="hub-tag">France</span>
+                </div>
+                <a href="cargo-intake.html" class="action-link">Access Dispatch Manifest &rarr;</a>
+            </div>
 
             <div class="service-card">
                 <div class="icon-box">🚚</div>

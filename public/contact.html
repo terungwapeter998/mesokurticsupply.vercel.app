@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Support | Mesokurtic Supply Chain Ltd</title>
+    <style>
+        :root {
+            --primary: #064e3b;
+            --accent: #10b981;
+            --accent-hover: #059669;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-surface: #f0fdf4;
+            --border-element: #bbf7d0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- Navigation Action Bar CSS --- */
+        .nav-action-bar {
+            max-width: 600px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .btn-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #ffffff;
+            color: var(--primary);
+            border: 1px solid var(--border-element);
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+        }
+
+        .btn-return:hover {
+            background-color: #f8fafc;
+            border-color: var(--accent-hover);
+        }
+
+        .menu-dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 6px);
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border-radius: 6px;
+            border: 1px solid var(--border-element);
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .menu-dropdown-content a {
+            color: var(--text-main);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background-color 0.1s ease;
+        }
+
+        .menu-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .menu-dropdown-content a:hover {
+            background-color: #f0fdf4;
+            color: var(--primary);
+        }
+
+        .menu-dropdown-content.show {
+            display: block;
+        }
+
+        /* --- Form Container Layout --- */
+        .portal-wrapper {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            border: 1px solid var(--border-element);
+            overflow: hidden;
+        }
+
+        .portal-header {
+            background: var(--primary);
+            color: #ffffff;
+            padding: 32px 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .portal-brand-logo {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .portal-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .portal-header p {
+            margin: 0;
+            color: #a7f3d0;
+            font-size: 14px;
+            letter-spacing: 0.025em;
+        }
+
+        .portal-body {
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-element);
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #ffffff;
+            color: var(--text-main);
+            box-sizing: border-box;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-hover);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+
+        .btn-submit {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.15s ease;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary);
+        }
+
+        @media (max-width: 600px) {
+            .portal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="nav-action-bar">
+        <a href="dashboard.html" class="btn-return">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Dashboard
+        </a>
+
+        <div class="menu-dropdown-wrapper">
+            <button type="button" class="btn-return" id="menuDropdownBtn">
+                System Menu
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <div class="menu-dropdown-content" id="menuDropdownContent">
+                <a href="dashboard.html">Overview Dashboard</a>
+                <a href="air-cargo.html">Air Cargo Form</a>
+                <a href="analytics.html">Analytics & Metrics</a>
+                <a href="fleet-dashboard.html">Fleet Logistics Tracking</a>
+                <a href="about.html">About Mesokurtic</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="portal-wrapper">
+        <div class="portal-header">
+            <img src="assets/image/logo.png" alt="Mesokurtic Supply Chain Ltd Logo" class="portal-brand-logo">
+            <h2>Contact Support Helpdesk</h2>
+            <p>Mesokurtic Supply Chain Ltd</p>
+        </div>
+
+        <div class="portal-body">
+            <form id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID_HERE" method="POST">
+
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" name="Full_Name" id="fullName" placeholder="Your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailAddress">Email Address</label>
+                    <input type="email" name="Email" id="emailAddress" placeholder="name@company.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueCategory">Inquiry / Support Category</label>
+                    <select name="Category" id="issueCategory" required>
+                        <option value="" disabled selected>Choose category...</option>
+                        <option value="Air Cargo Discrepancy">Air Cargo Ingestion Discrepancy</option>
+                        <option value="Manifest Tracking Error">Manifest & Fleet Tracking Error</option>
+                        <option value="Billing & Invoicing">Billing & Corporate Invoicing</option>
+                        <option value="General Technical Support">General Technical Support</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="supportMessage">Detailed Message</label>
+                    <textarea name="Message" id="supportMessage" rows="5"
+                        placeholder="Describe your request or technical issue in detail..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Submit Support Ticket</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const dropBtn = document.getElementById('menuDropdownBtn');
+        const dropContent = document.getElementById('menuDropdownContent');
+
+        dropBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            dropContent.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function () {
+            if (dropContent.classList.contains('show')) {
+                dropContent.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+
+</html>
