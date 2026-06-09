@@ -173,31 +173,31 @@
             <p class="nav-label">Corporate</p>
             <a href="index.html">Home</a>
             <a href="about.html">About Us</a>
-            <a href="service.html">Services</a>
-            <a href="cargo-intake.html">Air Cargo Dispatch</a>
+            <a href="services.html">Services</a>
+            <a href="air-cargo.html">Air Cargo Dispatch</a>
             <a href="career.html">Careers</a>
             <a href="contact.html">Contact</a>
 
             <p class="nav-label">Operational Intelligence</p>
             <a href="dashboard.html">Dashboard <span class="lock-icon">🔒</span></a>
-            <a href="operations.html">Logistics Fleet <span class="lock-icon">🔒</span></a>
+            <a href="fleet-dashboard.html">Logistics Fleet <span class="lock-icon">🔒</span></a>
             <a href="analytics.html">System Analytics <span class="lock-icon">🔒</span></a>
 
             <a href="login.html" id="auth-gate-link" class="portal-link">Admin Access</a>
         </div>
-    </div>
 
-    <script>
-        const portalLink = document.getElementById('auth-gate-link');
-        const sessionActive = localStorage.getItem('mesokurtic_admin_session') === 'true';
-        if (sessionActive) {
-            portalLink.innerText = "Open Console";
-            portalLink.href = "dashboard.html";
-        } else {
-            portalLink.innerText = "Admin Login";
-            portalLink.href = "login.html";
-        }
-    </script>
+
+        <script>
+            const portalLink = document.getElementById('auth-gate-link');
+            const sessionActive = localStorage.getItem('mesokurtic_admin_session') === 'true';
+            if (sessionActive) {
+                portalLink.innerText = "Open Console";
+                portalLink.href = "dashboard.html";
+            } else {
+                portalLink.innerText = "Admin Login";
+                portalLink.href = "login.html";
+            }
+        </script>
 </body>
 
 </html>
